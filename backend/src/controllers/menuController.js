@@ -41,11 +41,12 @@ const registerFood = async (req, res) => {
   console.log(newMenu)
   }
     catch (error) {
-      if (error.code = 11000) {
-        return res.status(400).json({ error: 'Food already exists'});
+      if (error.code === 11000) {
+        return res.status(400).json({ error: error});
       }
       res.status(500).json({ error: error.message })
     }
+
 }
 
 module.exports = {getMenu, registerFood}

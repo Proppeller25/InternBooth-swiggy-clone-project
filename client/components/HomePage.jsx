@@ -6,7 +6,8 @@ import {Link} from 'react-router-dom'
 
 export default function HomePage() {
   const [menuArr, setMenuArr] = useState([])
-  const [isLogInOpen, setIsLogInOpen] = useState(false);
+  const [isLogInOpen, setIsLogInOpen] = useState(false)
+  const [isSignUpOpen, setIsSignUpOpen] = useState(false)
 
   async function fetchMenu () {
     try{
@@ -24,7 +25,6 @@ export default function HomePage() {
     })
   }, [])
 
-  console.log(menuArr)
   
 
   return (
@@ -88,6 +88,8 @@ export default function HomePage() {
               </div>
             </div>
           </div>
+
+
           <article className='text-left lg:px-[200px] md:px-[100px] px-[50px] bg-white w-full'>
             <div className='bg-white flex flex-col items-start justify-center gap-4 lg:w-full md:w-full w-full pt-10 relative z-10'>
               <h1 className='font-bold text-2xl'>Discover our best food options</h1>
@@ -126,7 +128,10 @@ export default function HomePage() {
             <header className='flex flex-row justify-between items-center'>
               <div className=''>
                 <h1 className='lg:text-3xl md:text-2xl mt-2 lg:mt-5 font-medium'>Login</h1>
-              <h3 className='lg:text-sm md:text-[.7rem] text-[.5rem] w-full'>or <a href="" className='text-[#FF5200]'>create an account</a></h3>
+              <h3 className='lg:text-sm md:text-[.7rem] text-[.5rem] w-full'>or <span className='text-[#FF5200] hover:cursor-pointer' onClick={() => {
+                setIsLogInOpen(false)
+                setIsSignUpOpen(true)
+                }}>create an account</span></h3>
               </div>
               <div id='imgDiv'>
                 <img src="https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto/Image-login_btpq7r" className='w-[55px] md:w-[70px] lg:w-[100px]' />
@@ -140,7 +145,7 @@ export default function HomePage() {
                 <button className='bg-[#FF5200] w-full p-2 text-white rounded-lg lg:py-3'>
                   LOGIN
                 </button>
-                <small>By clicking on Login, I accept the Terms & Conditions & Privacy Policy</small>
+                <small className='text-[0.75rem]'>By clicking on Login, <a href="#" className='font-medium  hover:cursor-pointer'>I accept the Terms & Conditions & Privacy Policy</a></small>
               </form>
             </div>
             </div>
@@ -149,6 +154,47 @@ export default function HomePage() {
               
         </aside>
 
+        )}
+
+        {isSignUpOpen && (
+          <aside id="logInModel" className="fixed inset-0 bg-black/50 z-40">
+          <div className="bg-white fixed top-0 right-0 bottom-0 z-20 w-[280px] md:w-[40%] lg:w-[32%]">
+            <div className = ' py-12 px-9 relative'>
+              <button id="closeBtn" className="lg:text-xl absolute top-5 font-thin" onClick = {() => setIsSignUpOpen(false)}>
+            <i className="fa-solid fa-xmark "></i>
+            </button>
+
+            <header className='flex flex-row justify-between items-center'>
+              <div className=''>
+                <h1 className='lg:text-3xl md:text-2xl mt-2 lg:mt-5 font-medium'>Sign Up</h1>
+              <h3 className='lg:text-sm md:text-[.7rem] text-[.5rem] w-full'>or <span className='text-[#FF5200] hover:cursor-pointer' onClick={() => {
+                setIsSignUpOpen(false)
+                setIsLogInOpen(true)
+                }}>Login to your account</span></h3>
+              </div>
+              <div id='imgDiv'>
+                <img src="https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto/Image-login_btpq7r" className='w-[55px] md:w-[70px] lg:w-[100px]' />
+              </div>
+              
+            </header>
+
+            <div id='formDiv'>
+              <form action="" encType='' className='flex flex-col  gap-2'>
+                <input type="text" placeholder='Phone number' className='w-full lg:py-4 md:py-3 py-2 rounded-lg border-2 border-gray-300 mt-10 outline-none px-4 lg:text-[1rem] md:text-[0.875rem] text-[0.75rem]' />
+                <input type="text" placeholder='Name' className='w-full lg:py-4 md:py-3 py-2 rounded-lg border-2 border-gray-300 mt-0 outline-none px-4 lg:text-[1rem] md:text-[0.875rem] text-[0.75rem]' />
+                <input type="email" placeholder='Email' className='w-full lg:py-4 md:py-3 py-2 rounded-lg border-2 border-gray-300 mt-0 outline-none px-4 lg:text-[1rem] md:text-[0.875rem] text-[0.75rem]' />
+                <a href="" className='text-[#5D8ED5] text-sm text-left'>Have a referal Code?</a>
+                <button className='bg-[#FF5200] w-full p-2 text-white rounded-lg lg:py-3' action="submit">
+                  CONTINUE
+                </button>
+                <small className='text-[0.75rem]'>By creating an account, <a href="#" className='font-medium  hover:cursor-pointer'>I accept the Terms & Conditions & Privacy Policy</a></small>
+              </form>
+            </div>
+            </div>
+
+          </div>
+              
+        </aside>
         )}
         
 

@@ -1,5 +1,6 @@
 const User = require('../models/user')
 const bcrypt = require ('bcrypt')
+const jwt = require('jsonwebtoken')
 
 
 const registerUser = async (req, res) => {
@@ -21,7 +22,7 @@ const registerUser = async (req, res) => {
 
 const deleteUser = async (req, res) => {
   try{
-    const {id} = req.body
+    const {id} = req.params
     const deletedUser = await User.findByIdAndDelete(id)
 
     if (!deletedUser) {
@@ -53,19 +54,35 @@ const getUser = async (req, res) => {
     if(!isMatch) {
       return res.status (400).json ({message: "Password is incorrect"})
     }
-    res.status(200).json ({message: 'Login Successful...', foundUser})
+    
+    const payload = {
+      user: {
+        id: foundUser._id,
+        username: foundUser.username,
+        email: foundUser.email
+      }
+    }
+
+    jwt.sign(
+      payload,
+      process.env.JWT_SECRET,
+      {expiresIn: '1h'},
+      (err, token) => {
+        if (err) throw err
+        res.status(200).json({message: 'Login successful', token})
+      }
+    )
   }
   catch (err){
     res.status(500).json({error: err.message})
-    console.log(req.body)
   }
 }
 
 const getAllUsers = async (req, res) => {
   try {
     const users = await User.find()
-    if (!users){
-      res.status(404).json({message})
+    if (!users || users.length === 0){
+      res.status(404).json({message: "No users found"})
     }
     res.status(200).json({message: 'found users:', users})
   }

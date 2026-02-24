@@ -2,11 +2,18 @@ const mongoose = require('mongoose');
 
 const MenuSchema = new mongoose.Schema(
   {
+    // Reference to the restaurant this menu item belongs to
+    restaurantId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Restaurant',
+      required: [true, 'Please provide a restaurant ID']
+    },
     name: {
       type: String,
       required: [true, 'Please add a dish name'],
       trim: true,
       maxlength: [100, 'Name cannot be more than 100 characters'],
+      // Note: unique is global; consider removing if same dish name can appear in different restaurants
       unique: true
     },
     description: {
@@ -40,7 +47,7 @@ const MenuSchema = new mongoose.Schema(
       default: function() {
         return `${this.name}.png`;
       },
-       required: [true, 'Please add an image URL']
+      required: [true, 'Please add an image URL']
     },
     ingredients: {
       type: [String],
@@ -65,5 +72,8 @@ const MenuSchema = new mongoose.Schema(
     timestamps: true, // adds createdAt and updatedAt
   }
 );
+
+// Optional: Create a compound index to ensure a dish name is unique per restaurant
+// MenuSchema.index({ restaurantId: 1, name: 1 }, { unique: true });
 
 module.exports = mongoose.model('Menu', MenuSchema);

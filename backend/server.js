@@ -12,8 +12,10 @@ app.use(cors({origin:'http://localhost:3000'}))
 
 const userRoutes = require ('./src/routes/userRoutes')
 const menuRoutes = require('./src/routes/menuRoutes')
-app.use('/data', userRoutes)
+const restaurantRoutes = require('./src/routes/restaurantsRoutes')
+app.use('/swiggy', userRoutes)
 app.use('/swiggy', menuRoutes)
+app.use('/swiggy', restaurantRoutes)
 
 
 

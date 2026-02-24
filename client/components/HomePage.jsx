@@ -8,6 +8,7 @@ export default function HomePage() {
   const [menuArr, setMenuArr] = useState([])
   const [isLogInOpen, setIsLogInOpen] = useState(false)
   const [isSignUpOpen, setIsSignUpOpen] = useState(false)
+  const [restaurantsArr, setRestaurantsArr] = useState([])
 
   async function fetchMenu () {
     try{
@@ -19,12 +20,27 @@ export default function HomePage() {
     }
   }
 
+  async function fetchRestaurants () {
+    try{
+      const response = await axios.get('http://localhost:5000/swiggy/restaurants')
+      return response.data.restaurants
+    }
+    catch (error) {
+      return error.message
+    }
+  }
+
   useEffect(() => {
     fetchMenu().then((menu) => {
       setMenuArr(menu)
     })
   }, [])
 
+  useEffect(() => {
+    fetchRestaurants().then((restaurants) => {
+      setRestaurantsArr(restaurants)
+    })
+  }, [])
   
 
   return (
@@ -112,6 +128,19 @@ export default function HomePage() {
           <article className='text-left lg:px-[200px] md:px-[100px] px-[50px] bg-white w-full -mt-10'>
               <div className='bg-white flex flex-col items-start justify-center gap-4 lg:w-full md:w-full w-full pt-10 relative z-10'>
               <h1 className='font-bold text-2xl'>Discover best restaurants on Dineout</h1> 
+              </div>
+
+              <div className='grid grid-rows-2 grid-flow-col lg:gap-5 gap-10 w-full overflow-x-auto overflow-hidden no-scrollbar'>
+                {
+                  restaurantsArr.map((restaurant) => {
+                    return (
+                      <div key={restaurant._id} className=" text-center text-lg w-[fit-content] flex flex-col justify-center items-center">
+                        <img src={`./images/${restaurant.name}`} alt={restaurant.name} className="lg:min-w-40 min-w-20" />
+                        <h2 className="text-[1rem] font-medium mb-2">{restaurant.name}</h2>
+                      </div>
+                    )
+                  })
+                }
               </div>
           </article>
           

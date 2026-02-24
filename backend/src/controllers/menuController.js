@@ -9,13 +9,14 @@ const getMenu = async (req, res) => {
     res.status(200).json({messgae: "Found Menu", menu}) 
   }
   catch (error){
-    res.status(500).json({error: err.message})
+    res.status(500).json({error: error.message})
   }
 }
 
 const registerFood = async (req, res) => {
   try {
     const {
+        restaurantId,
         name,
         description,
         price,
@@ -27,6 +28,7 @@ const registerFood = async (req, res) => {
       } = req.body;
 
     const newFood = new Menu({
+      restaurantId,
       name,
       description,
       price,
@@ -38,7 +40,7 @@ const registerFood = async (req, res) => {
   })
   await newFood.save()
   res.status(200).json({ message: 'food registered successfully' })
-  console.log(newMenu)
+  console.log(newFood)
   }
     catch (error) {
       if (error.code === 11000) {

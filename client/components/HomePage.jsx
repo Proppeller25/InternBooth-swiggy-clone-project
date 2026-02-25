@@ -130,7 +130,7 @@ export default function HomePage() {
               <h1 className='font-bold text-2xl'>Discover best restaurants on Dineout</h1> 
               </div>
 
-              <div className='grid grid-rows-1 grid-flow-col lg:gap-5 gap-10 w-full overflow-x-auto overflow-hidden no-scrollbar mt-10'>
+              <div className='grid grid-rows-1 grid-flow-col lg:gap-5 gap-10 w-full overflow-x-auto overflow-hidden no-scrollbar mt-10 p-5'>
                 {
                   restaurantsArr.map((restaurant) => {
                     return (
@@ -175,7 +175,7 @@ export default function HomePage() {
 
                         <div id='tableBooking' className=''>
                           {restaurant.tableBooking ? (
-                            <div className='text-xs md:text-sm font-semibold text-[#616469] bg-[#F0F0F5] w-[fit-content] px-2 py-1 rounded-lg m-2'><i class="fa-regular fa-calendar-check"></i> Table booking</div>
+                            <div className='text-xs md:text-sm font-semibold text-[#616469] bg-[#F0F0F5] w-[fit-content] px-2 py-1 rounded-lg m-2'><i className="fa-regular fa-calendar-check"></i> Table booking</div>
                           ) : (
                             ''
                           )}
@@ -191,8 +191,85 @@ export default function HomePage() {
           
         </main>
 
-        <footer>
+        <footer className='bg-[#F0F0F5] p-10 lg:p-24 mt-10 grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 grid-flow-cols gap-10'>
+          <div id='swiggyDiv' className='col-span-full sm:col-span-2 md:col-span-3 lg:col-span-1 bg-clip-text'>
+            <Link to="/"><img src="/images/swiggyFooter.png" className='lg:max-w-[150px] md:max-w-32 max-w-24 ' /></Link>
+            <p className='mt-1'>© 2026 Swiggy Limited</p>
+            
+          </div>
 
+          <nav className='flex flex-col justify-center gap-5'>
+            <h1 className='text-[1rem] font-bold'>Company</h1>
+            <ul className='flex flex-col justify-center gap-5'>
+              <li><Link>About Us</Link></li>
+              <li><Link>Swiggy Corporate</Link></li>
+              <li><Link>Careers</Link></li>
+              <li><Link>Team</Link></li>
+              <li><Link>Swiggy One</Link></li>
+              <li><Link>Swiggy Instamart</Link></li>
+              <li><Link>Swiggy Dineout</Link></li>
+              <li><Link>Minis</Link></li>
+              <li><Link>Pyng</Link></li>
+            </ul>
+
+          </nav>
+
+          <nav className='flex flex-col gap-5'>
+            <h1 className='text-[1rem] font-bold'>Contact us</h1>
+            <ul className='flex flex-col justify-center gap-5'>
+              <li><Link>Help & Support</Link></li>
+              <li><Link>Partner With Us</Link></li>
+              <li><Link>Ride With Us</Link></li>
+            </ul>
+            
+            <h1 className='text-[1rem] font-bold mt-16'>Legal</h1>
+            <ul className='flex flex-col justify-center gap-5'>
+              <li><Link>Terms & Conditions</Link></li>
+              <li><Link>Cookie Policy</Link></li>
+              <li><Link>Privacy Policy</Link></li>
+            </ul>
+          </nav>
+
+          <nav className='flex flex-col gap-5'>
+            <h1 className='text-[1rem] font-bold'>Available in:</h1>
+            <ul className='flex flex-col justify-center gap-5'>
+              <li><Link>Banglore</Link></li>
+              <li><Link>Gurdaon</Link></li>
+              <li><Link>Hyderabad</Link></li>
+              <li><Link>Delhi</Link></li>
+              <li><Link>Mumbai</Link></li>
+              <li><Link>Pune</Link></li>
+              <li>
+                <div placeholder = '658 cities' className='w-[fit-content] p-2 rounded-lg border-2'>
+                  658 cities
+                </div>
+              </li>
+            </ul>
+          </nav>
+
+          <nav className='flex flex-col gap-5'>
+            <h1 className='text-[1rem] font-bold'>Life at Swiggy</h1>
+            <ul className='flex flex-col justify-center gap-5'>
+              <li><Link>Explore With Swiggy</Link></li>
+              <li><Link>Swiggy News</Link></li>
+              <li><Link>Snackables</Link></li>
+              
+            </ul>
+          </nav>
+
+          <nav className='flex flex-col gap-5'>
+            <h1 className='text-[1rem] font-bold'>Social Links</h1>
+            <ul className='flex flex-row justify-start items-start gap-5'>
+              <li><Link><i className='fa-brands fa-linkedin text-[1.5rem]'></i></Link></li>
+              <li><Link><i className='fa-brands fa-instagram text-[1.5rem]'></i></Link></li>
+              <li><Link><i className='fa-brands fa-facebook text-[1.5rem]'></i></Link></li>
+              <li><Link><i className='fa-brands fa-pinterest text-[1.5rem]'></i></Link></li>
+              <li><Link><i className='fa-brands fa-x-twitter text-[1.5rem]'></i></Link></li>
+              
+            </ul>
+          </nav>
+
+          
         </footer>
         
         {isLogInOpen && (
@@ -213,6 +290,7 @@ export default function HomePage() {
               </div>
               <div id='imgDiv'>
                 <img src="https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto/Image-login_btpq7r" className='w-[55px] md:w-[70px] lg:w-[100px]' />
+                
               </div>
               
             </header>

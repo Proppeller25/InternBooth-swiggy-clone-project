@@ -98,7 +98,7 @@ export default function HomePage() {
                 </div>
                 
                 <div className='relative z-10'>
-                  <img src="/images/moinMoin.png" className='lg:w-[170px] md:w-[120px] w-[80px] relative top-1 left-5 z-0'/>
+                  <img src="/images/menu/moinMoin.png" className='lg:w-[170px] md:w-[120px] w-[80px] relative top-1 left-5 z-0'/>
                 </div>
                 
               </div>
@@ -106,7 +106,7 @@ export default function HomePage() {
           </div>
 
 
-          <article className='text-left lg:px-[200px] md:px-[100px] px-[50px] bg-white w-full'>
+          <article className='text-left lg:px-[150px] md:px-[100px] px-[50px] bg-white w-full'>
             <div className='bg-white flex flex-col items-start justify-center gap-4 lg:w-full md:w-full w-full pt-10 relative z-10'>
               <h1 className='font-bold text-2xl'>Discover our best food options</h1>
               <div className='grid grid-rows-2 grid-flow-col lg:gap-5 gap-10 w-full overflow-x-auto overflow-hidden no-scrollbar'>
@@ -114,7 +114,7 @@ export default function HomePage() {
                 menuArr.map((food) => {
                   return (
                     <div key={food._id} className=" text-center text-lg w-[fit-content] flex flex-col justify-center items-center">
-                      <img src={`./images/${food.image}`} alt={food.name} className="lg:min-w-40 min-w-20" />
+                      <img src={`./images/menu/${food.image}`} alt={food.name} className="lg:min-w-40 min-w-20" />
                       <h2 className="text-[1rem] font-medium mb-2">{food.name}</h2>
                     </div>
                   )
@@ -125,19 +125,64 @@ export default function HomePage() {
 
           </article>
 
-          <article className='text-left lg:px-[200px] md:px-[100px] px-[50px] bg-white w-full -mt-10'>
+          <article className='text-left lg:px-[150px] md:px-[100px] px-[50px] bg-white w-full -mt-10'>
               <div className='bg-white flex flex-col items-start justify-center gap-4 lg:w-full md:w-full w-full pt-10 relative z-10'>
               <h1 className='font-bold text-2xl'>Discover best restaurants on Dineout</h1> 
               </div>
 
-              <div className='grid grid-rows-2 grid-flow-col lg:gap-5 gap-10 w-full overflow-x-auto overflow-hidden no-scrollbar'>
+              <div className='grid grid-rows-1 grid-flow-col lg:gap-5 gap-10 w-full overflow-x-auto overflow-hidden no-scrollbar mt-10'>
                 {
                   restaurantsArr.map((restaurant) => {
                     return (
-                      <div key={restaurant._id} className=" text-center text-lg w-[fit-content] flex flex-col justify-center items-center">
-                        <img src={`./images/${restaurant.name}`} alt={restaurant.name} className="lg:min-w-40 min-w-20" />
-                        <h2 className="text-[1rem] font-medium mb-2">{restaurant.name}</h2>
+                      <div key={restaurant._id} className="min-w-[max-content] rounded-[20px] overflow-hidden border shadow-xl">
+                        <div
+                          id='bgImg&Rating'
+                          style={
+                            {
+                              backgroundImage: `url('./images/restaurants/${restaurant.name}.png')`,
+                              backgroundSize: 'cover',
+                              backgroundPosition: 'center',
+                              backgroundRepeat: 'no-repeat',
+                            }
+                          }
+                          className="w-full h-32 md:h-40 lg:h-48 text-white flex flex-row items-end justify-between lg:px-5 md:px-3 px-2 py-2 rounded-t-[20px]"
+                        >
+                          <h2 className="text-[1.5rem] font-medium">{restaurant.name}</h2>
+
+                          <div className="flex flex-row items-center justify-center gap-1">
+                            <div className=' px-1 rounded-full'>
+                              <i className="fa-solid fa-star text-[.65rem] md:text-[.75rem] lg:text-[.8rem]"></i>
+                            </div>
+
+                            <div className="">{restaurant.rating}</div>
+                          </div>
+                        </div>
+                        <div id='cuisine-cost' className='flex flex-row justify-between gap-5 px-2 py-2 bg-white'>
+                          <div className='text-xs md:text-sm text-[#8F8F8F] line-clamp-1'>{restaurant.cuisines.join(', ')}</div>
+                          <div className='text-xs md:text-sm font-semibold text-[#8F8F8F]'>{restaurant.priceRange}</div>
+                        </div>
+
+                        <div id='location-distance' className='flex flex-row justify-between gap-5 px-2 py-2 bg-white'>
+                          <div className='text-xs md:text-sm text-[#8F8F8F] line-clamp-1'>
+                            {restaurant.address.street}, {restaurant.address.city}
+                          </div>
+
+                          <div>
+                            <div className='text-xs md:text-sm font-semibold text-[#8F8F8F] text-right'>{restaurant.distance} km</div>
+                          </div>
+
+                        </div>
+
+                        <div id='tableBooking' className=''>
+                          {restaurant.tableBooking ? (
+                            <div className='text-xs md:text-sm font-semibold text-[#616469] bg-[#F0F0F5] w-[fit-content] px-2 py-1 rounded-lg m-2'><i class="fa-regular fa-calendar-check"></i> Table booking</div>
+                          ) : (
+                            ''
+                          )}
+                        </div>
+                        
                       </div>
+                      
                     )
                   })
                 }
@@ -145,6 +190,10 @@ export default function HomePage() {
           </article>
           
         </main>
+
+        <footer>
+
+        </footer>
         
         {isLogInOpen && (
           <aside id="logInModel" className="fixed inset-0 bg-black/50 z-40">

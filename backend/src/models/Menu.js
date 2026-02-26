@@ -4,9 +4,13 @@ const MenuSchema = new mongoose.Schema(
   {
     // Reference to the restaurant this menu item belongs to
     restaurantId: {
-      type: mongoose.Schema.Types.ObjectId,
+      type: [mongoose.Schema.Types.ObjectId],
       ref: 'Restaurant',
-      required: [true, 'Please provide a restaurant ID']
+      required: true,
+      validate: {
+        validator: (arr) => arr.length === new Set(arr.map(id => id.toString())).size,
+        message: 'Duplicate restaurant IDs are not allowed'
+      }
     },
     name: {
       type: String,

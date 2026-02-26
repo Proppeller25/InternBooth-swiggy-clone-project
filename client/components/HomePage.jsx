@@ -4,7 +4,7 @@ import '../public/output.css'
 import axios from 'axios'
 import {Link} from 'react-router-dom'
 
-export default function HomePage() {
+function HomePage() {
   const [menuArr, setMenuArr] = useState([])
   const [isLogInOpen, setIsLogInOpen] = useState(false)
   const [isSignUpOpen, setIsSignUpOpen] = useState(false)
@@ -85,8 +85,8 @@ export default function HomePage() {
           </div>
 
 
-          <div id='cardDiv' className='flex flex-row items-center justify-center shadow-2xl'>
-            <div id='card1' className='bg-white p-5 rounded-lg pb-0'>
+          <div id='cardsDiv' className='flex flex-row items-center justify-center shadow-2xl'>
+            <div id='card1' className='bg-white p-5 rounded-3xl pb-0'>
               <h1 className='lg:text-[2rem] md:text-[1.5rem] text-[1rem] font-bold text-[#444348]'>FOOD DELIVERY</h1>
               <h2 className='lg:text-[1.5rem] md:text-[1rem] text-[.5rem] font-bold text-[#8F8F8F]'>FROM RESTAURANTS</h2>
               <div className='bg-[#FFEFE7] lg:text-[1rem] md:text-[.6rem] text-[.4rem] font-bold p-1 mt-1 w-[fit-content] text-[#FF5200] rounded-xl'>UPTO 60% OFF</div>
@@ -114,7 +114,7 @@ export default function HomePage() {
                 menuArr.map((food) => {
                   return (
                     <div key={food._id} className=" text-center text-lg w-[fit-content] flex flex-col justify-center items-center">
-                      <img src={`./images/menu/${food.image}`} alt={food.name} className="lg:min-w-40 min-w-20" />
+                      <img src={`./images/menu/${food.image}`} alt={food.image} className="lg:min-w-40 min-w-20" />
                       <h2 className="text-[1rem] font-medium mb-2">{food.name}</h2>
                     </div>
                   )
@@ -143,6 +143,7 @@ export default function HomePage() {
                               backgroundSize: 'cover',
                               backgroundPosition: 'center',
                               backgroundRepeat: 'no-repeat',
+                              backgroundColor:'red'
                             }
                           }
                           className="w-full h-32 md:h-40 lg:h-48 text-white flex flex-row items-end justify-between lg:px-5 md:px-3 px-2 py-2 rounded-t-[20px]"
@@ -162,13 +163,13 @@ export default function HomePage() {
                           <div className='text-xs md:text-sm font-semibold text-[#8F8F8F]'>{restaurant.priceRange}</div>
                         </div>
 
-                        <div id='location-distance' className='flex flex-row justify-between gap-5 px-2 py-2 bg-white'>
+                        <div id='location-distance' className='flex flex-row justify-between gap-5 px-3 py-2 bg-white'>
                           <div className='text-xs md:text-sm text-[#8F8F8F] line-clamp-1'>
                             {restaurant.address.street}, {restaurant.address.city}
                           </div>
 
                           <div>
-                            <div className='text-xs md:text-sm font-semibold text-[#8F8F8F] text-right'>{restaurant.distance} km</div>
+                            <div className='text-xs md:text-sm font-semibold text-[#8F8F8F] text-right '>{ restaurant.distance} {typeof restaurant.distance === 'number' ? 'km' : ''}</div>
                           </div>
 
                         </div>
@@ -192,7 +193,7 @@ export default function HomePage() {
         </main>
 
         <footer className='bg-[#F0F0F5] p-10 lg:p-24 mt-10 grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 grid-flow-cols gap-10'>
-          <div id='swiggyDiv' className='col-span-full sm:col-span-2 md:col-span-3 lg:col-span-1 bg-clip-text'>
+          <div id='swiggyDiv' className='col-span-full sm:col-span-2 md:col-span-3 lg:col-span-2 bg-clip-text'>
             <Link to="/"><img src="/images/swiggyFooter.png" className='lg:max-w-[150px] md:max-w-32 max-w-24 ' /></Link>
             <p className='mt-1'>© 2026 Swiggy Limited</p>
             
@@ -353,8 +354,8 @@ export default function HomePage() {
         </aside>
         )}
         
-
-      
     </>
   )
 }
+
+export { HomePage }

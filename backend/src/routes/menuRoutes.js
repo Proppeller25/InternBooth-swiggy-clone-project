@@ -6,6 +6,6 @@ const apiKey = require('../middleware/apiKey')
 
 
 router.get('/fullMenu', menuController.getMenu)
-router.post('/register', apiKey, menuController.registerFood)
+router.post('/registerFood', apiKey, menuController.registerFood)
 
 module.exports = router

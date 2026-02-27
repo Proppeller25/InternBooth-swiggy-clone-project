@@ -2,13 +2,15 @@ import React from 'react'
 import { useState, useEffect } from 'react'
 import '../public/output.css'
 import axios from 'axios'
-import {Link} from 'react-router-dom'
+import {Link, useNavigate} from 'react-router-dom'
+
 
 function HomePage() {
   const [menuArr, setMenuArr] = useState([])
   const [isLogInOpen, setIsLogInOpen] = useState(false)
   const [isSignUpOpen, setIsSignUpOpen] = useState(false)
   const [restaurantsArr, setRestaurantsArr] = useState([])
+
 
   async function fetchMenu () {
     try{
@@ -41,6 +43,12 @@ function HomePage() {
       setRestaurantsArr(restaurants)
     })
   }, [])
+
+//navigator to order page
+  const navigate = useNavigate()
+  function handleFoodClick (food) {
+    navigate(`/order/${food._id}`)
+  }
   
 
   return (
@@ -112,8 +120,9 @@ function HomePage() {
               <div className='grid grid-rows-2 grid-flow-col lg:gap-5 gap-10 w-full overflow-x-auto overflow-hidden no-scrollbar'>
                 {
                 menuArr.map((food) => {
+                  
                   return (
-                    <div key={food._id} className=" text-center text-lg w-[fit-content] flex flex-col justify-center items-center">
+                    <div key={food._id} className=" text-center text-lg w-[fit-content] flex flex-col justify-center items-center" onClick={() => handleFoodClick(food)}>
                       <img src={`./images/menu/${food.image}`} alt={food.image} className="lg:min-w-40 min-w-20" />
                       <h2 className="text-[1rem] font-medium mb-2">{food.name}</h2>
                     </div>

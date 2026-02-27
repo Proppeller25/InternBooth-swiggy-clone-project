@@ -52,4 +52,15 @@ const getRestaurants = async (req, res) => {
   
 }
 
-module.exports = {registerRestaurant, getRestaurants}
+const getRestaurantsById = async (req, res) => {
+  try {
+    const ids = req.query.ids.split(','); // expects comma-separated string
+    const restaurants = await restaurant.find({ _id: { $in: ids } });
+    res.json(restaurants)
+  }
+  catch (error) {
+    res.status(500).json({error: error.message})
+  }
+}
+
+module.exports = {registerRestaurant, getRestaurants, getRestaurantsById}

@@ -8,11 +8,13 @@ createRoutesFromElements
 } from 'react-router-dom'
 
 import {HomePage} from '../components/HomePage'
+import OrderPage from '../components/orderPage'
 
 const router =  createBrowserRouter(
   createRoutesFromElements(
     <Route path = '/'>
       <Route index element = {<HomePage/>}/>
+      <Route path="/order/:foodId" element = {<OrderPage />} />
     </Route>
   )
 )

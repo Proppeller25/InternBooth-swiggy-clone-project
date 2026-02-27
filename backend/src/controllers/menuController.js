@@ -13,6 +13,19 @@ const getMenu = async (req, res) => {
   }
 }
 
+const findMenuById = async (req, res) => {
+  try {
+    const {id} = req.params
+    const menu = await Menu.findById(id)
+    if (!menu) return res.status(404).json({ error: 'Menu not found' });
+    res.json(menu);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+}
+
+
+
 const registerFood = async (req, res) => {
   try {
     const {
@@ -51,4 +64,4 @@ const registerFood = async (req, res) => {
 
 }
 
-module.exports = {getMenu, registerFood}
+module.exports = {getMenu, registerFood, findMenuById}

@@ -9,12 +9,14 @@ createRoutesFromElements
 
 import {HomePage} from '../components/HomePage'
 import OrderPage from '../components/orderPage'
+import CheckOutPage from '../components/CheckOutPage'
 
 const router =  createBrowserRouter(
   createRoutesFromElements(
     <Route path = '/'>
       <Route index element = {<HomePage/>}/>
       <Route path="/order/:foodId" element = {<OrderPage />} />
+      <Route path="/CheckOut" element = {<CheckOutPage />} />
     </Route>
   )
 )

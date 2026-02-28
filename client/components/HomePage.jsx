@@ -53,28 +53,28 @@ function HomePage() {
 
   return (
     <>
-        <header className="bg-[#FF5200] flex flex-row items-center justify-evenly lg:gap-16 md:gap-8 gap-4 lg:p-8 md:p-6 p-4 z-10 relative" style={{fontFamily: 'Gilroy, Roboto, Helvetica Neue, sans-serif'}}>
-        <div><Link to="/"><img src="/images/swiggy.png" className='lg:max-w-[150px] md:max-w-32 max-w-24' /></Link></div>
+        <header className="bg-[#FE9803] flex flex-row items-center justify-evenly lg:gap-16 md:gap-8 gap-4 lg:p-8 md:p-6 p-4 z-10 relative" style={{fontFamily: 'Gilroy, Roboto, Helvetica Neue, sans-serif'}}>
+        <div><Link to="/"><img src="/images/NaiDeliver.png" className='lg:max-w-[250px] md:max-w-36 max-w-52' /></Link></div>
 
         <div></div> <div></div> <div></div>
         
         <nav>
-          <button id='logInBtn' className='lg:text-[1rem] md:text-[0.875rem] text-[12px] bg-black text-white lg:px-6 md:px-4 px-4 lg:py-3 md:py-2 py-2 rounded-xl font-bold hover:cursor-pointer' onClick={() => setIsLogInOpen(true)}>Sign in</button>
+          <button id='logInBtn' className='lg:text-[1rem] md:text-[0.875rem] text-[12px] bg-[#74C307] text-white lg:px-6 md:px-4 px-4 lg:py-3 md:py-2 py-2 rounded-xl font-bold hover:cursor-pointer' onClick={() => setIsLogInOpen(true)}>Sign in</button>
         </nav>
         <img src="/images/leftImg.png" className="lg:w-[250px] md:w-[150px] w-[120px] absolute left-0 lg:top-20 md:top-24 top-28 z-0 " />
         <img src="/images/rightImg.png" className="lg:w-[250px] md:w-[150px] w-[120px] absolute right-0 lg:top-20 md:top-24 top-28 z-0" />
         </header>
         
 
-        <main className='flex flex-col items-center justify-center gap-10 bg-[#FF5200] pt-10'>
+        <main className='flex flex-col items-center justify-center gap-10 bg-[#FE9803] pt-10'>
           <div className='lg:w-[62%] md:w-[70%] w-[80%] flex flex-col items-center justify-center'>
-            <h1 className='lg:text-[2.7rem] md:text-[1.8rem] text-[1.3rem] font-extrabold text-white text-center relative z-10'>Order food & groceries. Discover best restaurants. Swiggy it!</h1>
+            <h1 className='lg:text-[2.7rem] md:text-[1.8rem] text-[1.3rem] font-extrabold text-white text-center relative z-10'>Order food & groceries. Discover best restaurants. Let's Deliver it!</h1>
           </div>
 
           <div className='flex flex-row gap-6 md:gap-4 items-center justify-center lg:w-[70%] md:w-[85%] w-[90%]'>
             <div className='relative z-10 flex flex-row items-center justify-evenly bg-white rounded-lg lg:w-[280px] md:w-[180px] w-[140px]'>
 
-              <i className="fa-solid fa-location-dot text-[#FF5200] lg:text-[25px] md:text-[20px] text-[18px] lg:px-5"></i>
+              <i className="fa-solid fa-location-dot text-[#FE9803] lg:text-[25px] md:text-[20px] text-[18px] lg:px-5"></i>
 
               <select className='lg:py-3 md:py-2 py-2 rounded-lg lg:text-[1rem] md:text-[0.875rem] text-[0.75rem] font-bold lg:w-[full] md:w-full p-2 mr-2 md:mr-3 relative z-10 bg-inherit lg:h-[60px] md:h-[48px] h-[40px] outline-none px-2'>
               <option value="Nigeria">Nigeria</option>
@@ -97,12 +97,12 @@ function HomePage() {
             <div id='card1' className='bg-white p-5 rounded-3xl pb-0'>
               <h1 className='lg:text-[2rem] md:text-[1.5rem] text-[1rem] font-bold text-[#444348]'>FOOD DELIVERY</h1>
               <h2 className='lg:text-[1.5rem] md:text-[1rem] text-[.5rem] font-bold text-[#8F8F8F]'>FROM RESTAURANTS</h2>
-              <div className='bg-[#FFEFE7] lg:text-[1rem] md:text-[.6rem] text-[.4rem] font-bold p-1 mt-1 w-[fit-content] text-[#FF5200] rounded-xl'>UPTO 60% OFF</div>
+              <div className='bg-[#EAF9D6] lg:text-[1rem] md:text-[.6rem] text-[.4rem] font-bold p-1 mt-1 w-[fit-content] text-[#74C307] rounded-xl'>UPTO 60% OFF</div>
 
               <div id='foodPicDiv' className='flex flex-row items-center justify-between mt-2 lg:gap-20 md:gap-10 gap-9 mb-0
               relative z-10'>
                 <div>
-                  <i className="fa-solid fa-circle-arrow-right text-[#FF5200] lg:text-[3rem] md:text-[2rem] text-[1.5rem]"></i>
+                  <i className="fa-solid fa-circle-arrow-right text-[#FE9803] lg:text-[3rem] md:text-[2rem] text-[1.5rem]"></i>
                 </div>
                 
                 <div className='relative z-10'>
@@ -152,7 +152,7 @@ function HomePage() {
                               backgroundSize: 'cover',
                               backgroundPosition: 'center',
                               backgroundRepeat: 'no-repeat',
-                              backgroundColor:'red'
+                              backgroundColor:'#f3f4f6'
                             }
                           }
                           className="w-full h-32 md:h-40 lg:h-48 text-white flex flex-row items-end justify-between lg:px-5 md:px-3 px-2 py-2 rounded-t-[20px]"
@@ -203,8 +203,8 @@ function HomePage() {
 
         <footer className='bg-[#F0F0F5] p-10 lg:p-24 mt-10 grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 grid-flow-cols gap-10'>
           <div id='swiggyDiv' className='col-span-full sm:col-span-2 md:col-span-3 lg:col-span-2 bg-clip-text'>
-            <Link to="/"><img src="/images/swiggyFooter.png" className='lg:max-w-[150px] md:max-w-32 max-w-24 ' /></Link>
-            <p className='mt-1'>© 2026 Swiggy Limited</p>
+            <Link to="/"><img src="/images/NaiDeliver.png" className='lg:max-w-[250px] md:max-w-36 max-w-52' /></Link>
+            <p className='mt-1'>© 2026 NaiDeliver Limited</p>
             
           </div>
 
@@ -212,12 +212,12 @@ function HomePage() {
             <h1 className='text-[1rem] font-bold'>Company</h1>
             <ul className='flex flex-col justify-center gap-5'>
               <li><Link>About Us</Link></li>
-              <li><Link>Swiggy Corporate</Link></li>
+              <li><Link>NaiDeliver Corporate</Link></li>
               <li><Link>Careers</Link></li>
               <li><Link>Team</Link></li>
-              <li><Link>Swiggy One</Link></li>
-              <li><Link>Swiggy Instamart</Link></li>
-              <li><Link>Swiggy Dineout</Link></li>
+              <li><Link>NaiDeliver One</Link></li>
+              <li><Link>NaiDeliver Instamart</Link></li>
+              <li><Link>NaiDeliver Dineout</Link></li>
               <li><Link>Minis</Link></li>
               <li><Link>Pyng</Link></li>
             </ul>
@@ -243,27 +243,8 @@ function HomePage() {
           <nav className='flex flex-col gap-5'>
             <h1 className='text-[1rem] font-bold'>Available in:</h1>
             <ul className='flex flex-col justify-center gap-5'>
-              <li><Link>Banglore</Link></li>
-              <li><Link>Gurdaon</Link></li>
-              <li><Link>Hyderabad</Link></li>
-              <li><Link>Delhi</Link></li>
-              <li><Link>Mumbai</Link></li>
-              <li><Link>Pune</Link></li>
-              <li>
-                <div placeholder = '658 cities' className='w-[fit-content] p-2 rounded-lg border-2'>
-                  658 cities
-                </div>
-              </li>
-            </ul>
-          </nav>
-
-          <nav className='flex flex-col gap-5'>
-            <h1 className='text-[1rem] font-bold'>Life at Swiggy</h1>
-            <ul className='flex flex-col justify-center gap-5'>
-              <li><Link>Explore With Swiggy</Link></li>
-              <li><Link>Swiggy News</Link></li>
-              <li><Link>Snackables</Link></li>
-              
+              <li><Link>Lagos</Link></li>
+              <li><Link>Abuja FCT</Link></li>
             </ul>
           </nav>
 
@@ -293,7 +274,7 @@ function HomePage() {
             <header className='flex flex-row justify-between items-center'>
               <div className=''>
                 <h1 className='lg:text-3xl md:text-2xl mt-2 lg:mt-5 font-medium'>Login</h1>
-              <h3 className='lg:text-sm md:text-[.7rem] text-[.5rem] w-full'>or <span className='text-[#FF5200] hover:cursor-pointer' onClick={() => {
+              <h3 className='lg:text-sm md:text-[.7rem] text-[.5rem] w-full'>or <span className='text-[#74C307] hover:cursor-pointer' onClick={() => {
                 setIsLogInOpen(false)
                 setIsSignUpOpen(true)
                 }}>create an account</span></h3>
@@ -308,7 +289,7 @@ function HomePage() {
             <div id='formDiv'>
               <form action="" encType='' className='flex flex-col items-center justify-center gap-5'>
                 <input type="text" placeholder='Phone number' className='w-full lg:py-4 md:py-3 py-2 rounded-lg border-2 border-gray-300 mt-10 outline-none px-4 lg:text-[1rem] md:text-[0.875rem] text-[0.75rem]' />
-                <button className='bg-[#FF5200] w-full p-2 text-white rounded-lg lg:py-3'>
+                <button className='bg-[#FE9803] w-full p-2 text-white rounded-lg lg:py-3'>
                   LOGIN
                 </button>
                 <small className='text-[0.75rem]'>By clicking on Login, <a href="#" className='font-medium  hover:cursor-pointer'>I accept the Terms & Conditions & Privacy Policy</a></small>
@@ -333,7 +314,7 @@ function HomePage() {
             <header className='flex flex-row justify-between items-center'>
               <div className=''>
                 <h1 className='lg:text-3xl md:text-2xl mt-2 lg:mt-5 font-medium'>Sign Up</h1>
-              <h3 className='lg:text-sm md:text-[.7rem] text-[.5rem] w-full'>or <span className='text-[#FF5200] hover:cursor-pointer' onClick={() => {
+              <h3 className='lg:text-sm md:text-[.7rem] text-[.5rem] w-full'>or <span className='text-[#74C307] hover:cursor-pointer' onClick={() => {
                 setIsSignUpOpen(false)
                 setIsLogInOpen(true)
                 }}>Login to your account</span></h3>
@@ -350,7 +331,7 @@ function HomePage() {
                 <input type="text" placeholder='Name' className='w-full lg:py-4 md:py-3 py-2 rounded-lg border-2 border-gray-300 mt-0 outline-none px-4 lg:text-[1rem] md:text-[0.875rem] text-[0.75rem]' />
                 <input type="email" placeholder='Email' className='w-full lg:py-4 md:py-3 py-2 rounded-lg border-2 border-gray-300 mt-0 outline-none px-4 lg:text-[1rem] md:text-[0.875rem] text-[0.75rem]' />
                 <a href="" className='text-[#5D8ED5] text-sm text-left'>Have a referal Code?</a>
-                <button className='bg-[#FF5200] w-full p-2 text-white rounded-lg lg:py-3' action="submit">
+                <button className='bg-[#FE9803] w-full p-2 text-white rounded-lg lg:py-3' action="submit">
                   CONTINUE
                 </button>
                 <small className='text-[0.75rem]'>By creating an account, <a href="#" className='font-medium  hover:cursor-pointer'>I accept the Terms & Conditions & Privacy Policy</a></small>

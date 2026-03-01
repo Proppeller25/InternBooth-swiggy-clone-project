@@ -39,10 +39,11 @@ const deleteUser = async (req, res) => {
 
 const getAllUsers = async (req, res) => {
   try {
-    const users = await userService.getAllUsers();
+    const isAdmin = req.user.role === 'admin'
+    const users = await userService.getAllUsers(isAdmin)
     res.json({ users: usersDTO(users) });
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    res.status(500).json({ error: error.message })
   }
 };
 

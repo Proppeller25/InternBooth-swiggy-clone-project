@@ -36,7 +36,10 @@ const deleteUserById = async (userId, requestingUserId, isAdmin) => {
   return deleted;
 };
 
-const getAllUsers = async () => {
+const getAllUsers = async (isAdmin) => {
+  if (!isAdmin) {
+    throw new Error('Unauthorized');
+  }
   return await User.find();
 };
 

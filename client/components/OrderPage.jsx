@@ -57,6 +57,20 @@ function addToCart (restaurantId, restaurantName) {
   const foodName = food.name
   const price = food.price
   const items = 1
+  const randomID = () => {
+  const nums = [1, 2, 3, 4, 5, 6, 7, 8, 9, 0]
+  const alphabets = 'abcdefghijklmnopqrstuvwxyz'
+  let randomId = ''
+
+  for (let i = 0; i < 10; i++) {
+    let randomIndex1 = Math.floor(Math.random() * nums.length)
+    let randomIndex2 = Math.floor(Math.random() * alphabets.length)
+    randomId += `${nums[randomIndex1]}`
+    if (i % 5 !== 0) randomId += `${alphabets[randomIndex2]}`
+  }
+
+  return randomId
+}
 
   const existingItem = Cart.find(
   item => item.restaurantId === restaurantId
@@ -66,6 +80,7 @@ function addToCart (restaurantId, restaurantName) {
     existingItem.items++;
   } else {
     Cart.push({
+      id: randomID(),
       foodName,
       restaurantId,
       restaurantName,

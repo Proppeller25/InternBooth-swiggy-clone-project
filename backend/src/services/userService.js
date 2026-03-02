@@ -23,7 +23,7 @@ const authenticateUser = async (email, password) => {
     { user: { id: user._id, username: user.username, email: user.email } },
     process.env.JWT_SECRET,
     { expiresIn: '1h' }
-  );
+  )
   return { token, user };
 };
 
@@ -42,6 +42,7 @@ const getAllUsers = async (isAdmin) => {
   }
   return await User.find();
 };
+
 
 module.exports = {
   createUser,

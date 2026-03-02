@@ -22,13 +22,26 @@ const UserSchema = new mongoose.Schema({
     enum: ['user', 'admin'],
     default: 'user',
   },
+  verified: {
+    type: Boolean,
+    default: false
+  },
+  verificationCode: { 
+    type: String, 
+    select: false 
+  },
+  codeValidation: { 
+    type: Number, 
+    select: false 
+  }
 },
 {
     timestamps: true, // adds createdAt and updatedAt
-  })
+  }
+)
 
 UserSchema.pre('save', async function() {
-  if (!this.isModified('password')) return next()  
+  if (!this.isModified('password')) return  
   const salt = await bcrypt.genSalt(10)
   this.password = await bcrypt.hash(this.password, salt)
 })

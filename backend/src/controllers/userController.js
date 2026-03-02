@@ -20,11 +20,15 @@ const getUser = async (req, res) => {
       req.body.password
     );
     // res.json({ message: 'Login successful', token, user: userDTO(user) });
-    res.cookie('Authorization', 'Bearer' + token, {expires: new Date(Date.now() + 8 * 3600000), httpOnly: process.env.NODE_ENV === 'production', secure: process.env.NODE_ENV === 'production'}).json({
-    success: true,
-    token,
-    message: 'Login Successful'
-  })
+    res.cookie('Authorization', token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: 'strict',
+      expires: new Date(Date.now() + 1 * 3600000)
+    }).json({
+        success: true,
+        message: 'Login Successful'
+      })
   } catch (error) {
     res.status(401).json({ error: error.message });
   }
@@ -89,7 +93,7 @@ const sendVerificationCode = async (req, res) => {
       html: '<h1>' + codeValue + '</h1>'
     })
 
-    if (info.accepted[0] === existingUser.email){
+    if (info.accepted.includes(existingUser.email)){
         const hashedCodeValue = createHmac('sha256', process.env.HMAC_VARIFICATION_CODE).update(codeValue).digest('hex')
         existingUser.verificationCode = hashedCodeValue
         existingUser.codeValidation = Date.now()

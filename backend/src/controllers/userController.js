@@ -71,6 +71,13 @@ const sendVerificationCode = async (req, res) => {
   try {
     const {email} = req.body
     const existingUser = await User.findOne({email})
+
+    if (existingUser.email !== req.user.email) {
+      return res.status(404).json({
+        success: false,
+        message: "Unauthorized access"
+      })
+    }
     if (!existingUser){
       return res.status(404).json({
         success: false,
@@ -84,6 +91,13 @@ const sendVerificationCode = async (req, res) => {
         message: "You are already verified"
       })
     }
+    if (existingUser.role === 'admin'){
+      return res.status(400).json({
+        success:false,
+        message: "Account does not have this action"
+      })
+    }
+
 
     const codeValue = Math.floor(Math.random() * 1000000).toString()
     let info = await transport.sendMail({
@@ -118,10 +132,25 @@ const verifyCode = async (req, res) => {
   try {
     const codeValue = providedCode.toString() 
     const existingUser = await User.findOne({email}).select("+verificationCode +codeValidation")
+
+    if (existingUser.email !== req.user.email) {
+      return res.status(404).json({
+        success: false,
+        message: "Unauthorized access"
+      })
+    }
+    
     if (!existingUser){
       return res.status(404).json({
         success: false,
         message: "User does not exist"
+      })
+    }
+
+    if (existingUser.role === 'admin'){
+      return res.status(400).json({
+        success:false,
+        message: "Account type does not have this action"
       })
     }
 

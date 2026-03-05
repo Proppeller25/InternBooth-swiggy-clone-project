@@ -4,7 +4,7 @@ const regex = new RegExp('^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z
 const registerSchema = Joi.object({
   username: Joi.string().alphanum().min(3).max(30).required(),
   email: Joi.string().email().required().min(6).max(60).email({tlds: {allow: ['com', 'net']}}).messages({
-    "string.email": "enter a valid email"
+    "string.email": "enter a valid email (.com or .net)"
   }),
   password: Joi.string().min(6).required().pattern(regex).messages({
     "string.pattern.base": "Password must be at least 8 characters long and include at least one uppercase letter, one lowercase letter, one number, and one special character (@$!%*?&)"

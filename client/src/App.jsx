@@ -6,6 +6,9 @@ RouterProvider,
 createBrowserRouter,
 createRoutesFromElements
 } from 'react-router-dom'
+import axios from 'axios'
+
+import { AuthProvider } from '../contexts/AuthContext';
 
 import {HomePage} from '../components/HomePage'
 import OrderPage from '../components/orderPage'
@@ -24,7 +27,9 @@ const router =  createBrowserRouter(
 export default function App() {
   return( 
     <>
-      <RouterProvider router = {router}/>
+      <AuthProvider>
+        <RouterProvider router = {router}/>
+      </AuthProvider>
     </>
   )
 }

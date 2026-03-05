@@ -9,6 +9,7 @@ const {registerSchema, loginSchema, acceptCodeSchema} = require('../validations/
 router.delete('/deleteUser/:id', auth, userController.deleteUser)
 
 router.get('/users',auth, userController.getAllUsers)
+router.get('/loggedInUser', auth, userController.getLoggedInUser)
 
 router.post('/signUp', validate(registerSchema), userController.registerUser)
 router.post('/login', validate(loginSchema), userController.getUser)

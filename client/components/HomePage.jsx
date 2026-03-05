@@ -1,8 +1,10 @@
 import React from 'react'
 import { useState, useEffect } from 'react'
 import '../public/output.css'
+import '../src/index.css'
 import axios from 'axios'
 import {Link, useNavigate} from 'react-router-dom'
+import { useAuth } from '../contexts/AuthContext'
 
 
 function HomePage() {
@@ -10,12 +12,54 @@ function HomePage() {
   const [isLogInOpen, setIsLogInOpen] = useState(false)
   const [isSignUpOpen, setIsSignUpOpen] = useState(false)
   const [restaurantsArr, setRestaurantsArr] = useState([])
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const [username, setUsername] = useState('')
+  const navigate = useNavigate()
+  const { user, isLoggedIn, login } = useAuth()
 
+  const handleSignUp = async (e) => {
+    e.preventDefault();
+    try {
+        const response = await axios.post("http://localhost:5000/swiggy/signUp", {
+            username,
+            email,
+            password
+        }, {
+            withCredentials: true
+        });
+        // Handle success (e.g., show message, redirect, clear form)
+        console.log("Sign-up successful:", response.data);
+        if (response.data.success) {
+          setIsSignUpOpen(false)
+          navigate('/')
+        }
+        // Possibly set some state to indicate success
+    } catch (error) {
+        console.error("Sign-up failed:",error.response?.data || error.message)
+    }
+}
+
+const handleLogIn = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await axios.post('http://localhost:5000/swiggy/login', { email, password }, {
+        withCredentials: true
+      });
+      if (response.data.success) {
+        login(response.data.user);    // update context
+        setIsLogInOpen(false);
+      }
+    } catch (error) {
+      console.error('Login failed:', error.response?.data || error.message);
+    }
+  };
 
   async function fetchMenu () {
     try{
       const response = await axios.get('http://localhost:5000/swiggy/fullMenu')
       return response.data.menu
+      
     }
     catch (error){
       return error.message
@@ -44,8 +88,20 @@ function HomePage() {
     })
   }, [])
 
+
+
+  // Effect to react when isLoggedIn changes
+  useEffect(() => {
+    if (isLoggedIn) {
+      console.log('User is now logged in');
+    }
+  }, [isLoggedIn]);
+
+
+  
+
 //navigator to order page
-  const navigate = useNavigate()
+  
   function handleFoodClick (food) {
     navigate(`/order/${food._id}`)
   }
@@ -53,13 +109,26 @@ function HomePage() {
 
   return (
     <>
-        <header className="bg-[#FE9803] flex flex-row items-center justify-evenly lg:gap-16 md:gap-8 gap-4 lg:p-8 md:p-6 p-4 z-10 relative" style={{fontFamily: 'Gilroy, Roboto, Helvetica Neue, sans-serif'}}>
-        <div><Link to="/"><img src="/images/NaiDeliver.png" className='lg:max-w-[250px] md:max-w-36 max-w-52' /></Link></div>
+        <header className="bg-[#FE9803] flex flex-row items-center justify-between lg:gap-16 md:gap-8 gap-4 lg:p-8 md:p-6 p-4 z-10 relative" style={{fontFamily: 'Gilroy, Roboto, Helvetica Neue, sans-serif'}}>
+        <div><Link to="/"><img src="/images/NaiDeliver.png" className='lg:max-w-[250px] md:max-w-36 max-w-52 relative z-10' /></Link></div>
 
-        <div></div> <div></div> <div></div>
+        {/* <div></div> <div></div> <div></div> */}
         
-        <nav>
-          <button id='logInBtn' className='lg:text-[1rem] md:text-[0.875rem] text-[12px] bg-[#74C307] text-white lg:px-6 md:px-4 px-4 lg:py-3 md:py-2 py-2 rounded-xl font-bold hover:cursor-pointer' onClick={() => setIsLogInOpen(true)}>Sign in</button>
+        
+        <nav id='signInNav text-center'>
+          {
+            isLoggedIn && (
+              <i className="fa-solid fa-circle-user text-center lg:text-3xl md:text-2xl text-xl hover:scale-150 transition-all hover:cursor-pointer" title= {`logged in as ${user.username}`} ></i>
+            )
+          }
+
+          {
+            !isLoggedIn && (
+              <button  className='lg:text-[1rem] md:text-[0.9rem] text-sm bg-[#74C307] text-white lg:px-6 md:px-4 px-4 lg:py-3 md:py-2 py-2 rounded-xl font-bold hover:cursor-pointer' onClick={() => setIsLogInOpen(true)}>Sign in</button>
+            )
+          }
+
+          
         </nav>
         <img src="/images/leftImg.png" className="lg:w-[250px] md:w-[150px] w-[120px] absolute left-0 lg:top-20 md:top-24 top-28 z-0 " />
         <img src="/images/rightImg.png" className="lg:w-[250px] md:w-[150px] w-[120px] absolute right-0 lg:top-20 md:top-24 top-28 z-0" />
@@ -201,66 +270,72 @@ function HomePage() {
           
         </main>
 
-        <footer className='bg-[#F0F0F5] p-10 lg:p-24 mt-10 grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 grid-flow-cols gap-10'>
-          <div id='swiggyDiv' className='col-span-full sm:col-span-2 md:col-span-3 lg:col-span-2 bg-clip-text'>
-            <Link to="/"><img src="/images/NaiDeliver.png" className='lg:max-w-[250px] md:max-w-36 max-w-52' /></Link>
-            <p className='mt-1'>© 2026 NaiDeliver Limited</p>
-            
+        <footer className="bg-[#F0F0F5] p-10 lg:p-24 mt-10 grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-10 overflow-x-hidden">
+  
+          <div className="col-span-full sm:col-span-2 md:col-span-3 lg:col-span-2 min-w-0">
+            <Link to="/">
+              <img 
+                src="/images/NaiDeliver.png" 
+                className="w-full max-w-[250px] h-auto" 
+                alt="NaiDeliver"
+              />
+            </Link>
+            <p className="mt-1 break-words">© 2026 NaiDeliver Limited</p>
           </div>
 
-          <nav className='flex flex-col justify-center gap-5'>
-            <h1 className='text-[1rem] font-bold'>Company</h1>
-            <ul className='flex flex-col justify-center gap-5'>
-              <li><Link>About Us</Link></li>
-              <li><Link>NaiDeliver Corporate</Link></li>
-              <li><Link>Careers</Link></li>
-              <li><Link>Team</Link></li>
-              <li><Link>NaiDeliver One</Link></li>
-              <li><Link>NaiDeliver Instamart</Link></li>
-              <li><Link>NaiDeliver Dineout</Link></li>
-              <li><Link>Minis</Link></li>
-              <li><Link>Pyng</Link></li>
-            </ul>
-
-          </nav>
-
-          <nav className='flex flex-col gap-5'>
-            <h1 className='text-[1rem] font-bold'>Contact us</h1>
-            <ul className='flex flex-col justify-center gap-5'>
-              <li><Link>Help & Support</Link></li>
-              <li><Link>Partner With Us</Link></li>
-              <li><Link>Ride With Us</Link></li>
-            </ul>
-            
-            <h1 className='text-[1rem] font-bold mt-16'>Legal</h1>
-            <ul className='flex flex-col justify-center gap-5'>
-              <li><Link>Terms & Conditions</Link></li>
-              <li><Link>Cookie Policy</Link></li>
-              <li><Link>Privacy Policy</Link></li>
+          {/* Company Links */}
+          <nav className="flex flex-col justify-center gap-5 min-w-0">
+            <h1 className="text-[1rem] font-bold">Company</h1>
+            <ul className="flex flex-col justify-center gap-5">
+              <li className="break-words"><Link>About Us</Link></li>
+              <li className="break-words"><Link>NaiDeliver Corporate</Link></li>
+              <li className="break-words"><Link>Careers</Link></li>
+              <li className="break-words"><Link>Team</Link></li>
+              <li className="break-words"><Link>NaiDeliver One</Link></li>
+              <li className="break-words"><Link>NaiDeliver Instamart</Link></li>
+              <li className="break-words"><Link>NaiDeliver Dineout</Link></li>
+              <li className="break-words"><Link>Minis</Link></li>
+              <li className="break-words"><Link>Pyng</Link></li>
             </ul>
           </nav>
 
-          <nav className='flex flex-col gap-5'>
-            <h1 className='text-[1rem] font-bold'>Available in:</h1>
-            <ul className='flex flex-col justify-center gap-5'>
-              <li><Link>Lagos</Link></li>
-              <li><Link>Abuja FCT</Link></li>
+          {/* Contact & Legal */}
+          <nav className="flex flex-col gap-5 min-w-0">
+            <h1 className="text-[1rem] font-bold">Contact us</h1>
+            <ul className="flex flex-col justify-center gap-5">
+              <li className="break-words"><Link>Help & Support</Link></li>
+              <li className="break-words"><Link>Partner With Us</Link></li>
+              <li className="break-words"><Link>Ride With Us</Link></li>
+            </ul>
+            <h1 className="text-[1rem] font-bold mt-16">Legal</h1>
+            <ul className="flex flex-col justify-center gap-5">
+              <li className="break-words"><Link>Terms & Conditions</Link></li>
+              <li className="break-words"><Link>Cookie Policy</Link></li>
+              <li className="break-words"><Link>Privacy Policy</Link></li>
             </ul>
           </nav>
 
-          <nav className='flex flex-col gap-5'>
-            <h1 className='text-[1rem] font-bold'>Social Links</h1>
-            <ul className='flex flex-row justify-start items-start gap-5'>
-              <li><Link><i className='fa-brands fa-linkedin text-[1.5rem]'></i></Link></li>
-              <li><Link><i className='fa-brands fa-instagram text-[1.5rem]'></i></Link></li>
-              <li><Link><i className='fa-brands fa-facebook text-[1.5rem]'></i></Link></li>
-              <li><Link><i className='fa-brands fa-pinterest text-[1.5rem]'></i></Link></li>
-              <li><Link><i className='fa-brands fa-x-twitter text-[1.5rem]'></i></Link></li>
-              
+          {/* Available in */}
+          <nav className="flex flex-col gap-5 min-w-0">
+            <h1 className="text-[1rem] font-bold">Available in:</h1>
+            <ul className="flex flex-col justify-center gap-5">
+              <li className="break-words"><Link>Lagos</Link></li>
+              <li className="break-words"><Link>Abuja FCT</Link></li>
             </ul>
           </nav>
 
-          
+          {/* Social Links */}
+          <nav className="flex flex-col gap-5 min-w-0">
+            <h1 className="text-[1rem] font-bold">Social Links</h1>
+            <ul className="flex flex-row justify-start items-start gap-5 flex-wrap">
+              <li><Link><i className="fa-brands fa-linkedin text-[1.5rem]"></i></Link></li>
+              <li><Link><i className="fa-brands fa-instagram text-[1.5rem]"></i></Link></li>
+              <li><Link><i className="fa-brands fa-facebook text-[1.5rem]"></i></Link></li>
+              <li><Link><i className="fa-brands fa-pinterest text-[1.5rem]"></i></Link></li>
+              <li><Link><i className="fa-brands fa-x-twitter text-[1.5rem]"></i></Link></li>
+            </ul>
+          </nav>
+
         </footer>
         
         {isLogInOpen && (
@@ -277,6 +352,9 @@ function HomePage() {
               <h3 className='lg:text-sm md:text-[.7rem] text-[.5rem] w-full'>or <span className='text-[#74C307] hover:cursor-pointer' onClick={() => {
                 setIsLogInOpen(false)
                 setIsSignUpOpen(true)
+                setEmail('')
+                setPassword('')
+                setUsername('')
                 }}>create an account</span></h3>
               </div>
               <div id='imgDiv'>
@@ -287,8 +365,9 @@ function HomePage() {
             </header>
 
             <div id='formDiv'>
-              <form action="" encType='' className='flex flex-col items-center justify-center gap-5'>
-                <input type="text" placeholder='Phone number' className='w-full lg:py-4 md:py-3 py-2 rounded-lg border-2 border-gray-300 mt-10 outline-none px-4 lg:text-[1rem] md:text-[0.875rem] text-[0.75rem]' />
+              <form method='post' action="#" className='flex flex-col items-center justify-center gap-5' onSubmit={handleLogIn}>
+                <input name='email' autoComplete='email' type="email" placeholder='Email' className='w-full lg:py-4 md:py-3 py-2 rounded-lg border-2 border-gray-300 mt-10 outline-none px-4 lg:text-[1rem] md:text-[0.875rem] text-[0.75rem]' onChange={(e) => setEmail (e.target.value)} required/>
+                <input name='password' type="password" autoComplete='current-password' placeholder='Password' className='w-full lg:py-4 md:py-3 py-2 rounded-lg border-2 border-gray-300 outline-none px-4 lg:text-[1rem] md:text-[0.875rem] text-[0.75rem]' onChange={(e) => setPassword (e.target.value)} required/>
                 <button className='bg-[#FE9803] w-full p-2 text-white rounded-lg lg:py-3'>
                   LOGIN
                 </button>
@@ -317,6 +396,9 @@ function HomePage() {
               <h3 className='lg:text-sm md:text-[.7rem] text-[.5rem] w-full'>or <span className='text-[#74C307] hover:cursor-pointer' onClick={() => {
                 setIsSignUpOpen(false)
                 setIsLogInOpen(true)
+                setEmail('')
+                setPassword('')
+                setUsername('')
                 }}>Login to your account</span></h3>
               </div>
               <div id='imgDiv'>
@@ -326,12 +408,12 @@ function HomePage() {
             </header>
 
             <div id='formDiv'>
-              <form action="" encType='' className='flex flex-col  gap-2'>
-                <input type="text" placeholder='Phone number' className='w-full lg:py-4 md:py-3 py-2 rounded-lg border-2 border-gray-300 mt-10 outline-none px-4 lg:text-[1rem] md:text-[0.875rem] text-[0.75rem]' />
-                <input type="text" placeholder='Name' className='w-full lg:py-4 md:py-3 py-2 rounded-lg border-2 border-gray-300 mt-0 outline-none px-4 lg:text-[1rem] md:text-[0.875rem] text-[0.75rem]' />
-                <input type="email" placeholder='Email' className='w-full lg:py-4 md:py-3 py-2 rounded-lg border-2 border-gray-300 mt-0 outline-none px-4 lg:text-[1rem] md:text-[0.875rem] text-[0.75rem]' />
+              <form method='post' action="#" className='flex flex-col  gap-2' onSubmit={handleSignUp}>
+                <input name='username' type="username" placeholder='Username' className='w-full lg:py-4 md:py-3 py-2 rounded-lg border-2 border-gray-300 mt-10 outline-none px-4 lg:text-[1rem] md:text-[0.875rem] text-[0.75rem]' value={username} onChange={(e) => setUsername(e.target.value)}/>
+                <input autoComplete='email' name='email' type="email" placeholder='Email' className='w-full lg:py-4 md:py-3 py-2 rounded-lg border-2 border-gray-300 mt-0 outline-none px-4 lg:text-[1rem] md:text-[0.875rem] text-[0.75rem]' onChange={(e) => setEmail(e.target.value)}/>
+                <input autoComplete='new-password' name='Password' type="password" placeholder='Password' className='w-full lg:py-4 md:py-3 py-2 rounded-lg border-2 border-gray-300 mt-0 outline-none px-4 lg:text-[1rem] md:text-[0.875rem] text-[0.75rem]' onChange={(e) => setPassword(e.target.value)}/>
                 <a href="" className='text-[#5D8ED5] text-sm text-left'>Have a referal Code?</a>
-                <button className='bg-[#FE9803] w-full p-2 text-white rounded-lg lg:py-3' action="submit">
+                <button className='bg-[#FE9803] w-full p-2 text-white rounded-lg lg:py-3' formAction={"submit"}>
                   CONTINUE
                 </button>
                 <small className='text-[0.75rem]'>By creating an account, <a href="#" className='font-medium  hover:cursor-pointer'>I accept the Terms & Conditions & Privacy Policy</a></small>

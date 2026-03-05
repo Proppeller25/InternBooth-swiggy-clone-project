@@ -2,12 +2,28 @@ const userService = require('../services/userService');
 const { userDTO, usersDTO } = require('../dtos/userDTO');
 const User = require('../models/User');
 const transport = require('../middleware/sendMail')
-const {createHmac} = require('crypto') 
+const {createHmac} = require('crypto')
+
+const getLoggedInUser = async (req, res) => {
+  try{
+    return res.json({
+      success:true,
+      user:userDTO(req.user)
+    })
+  } catch(error) {
+    return res.status(500).json({
+      error: error.message
+    })
+  }
+}
 
 const registerUser = async (req, res) => {
   try {
     const user = await userService.createUser(req.body);
-    res.status(201).json({ message: 'User registered', user: userDTO(user) });
+    res.status(201).json({ 
+      success: true,
+      message: 'User registered', user: userDTO(user) 
+    });
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
@@ -22,12 +38,13 @@ const getUser = async (req, res) => {
     // res.json({ message: 'Login successful', token, user: userDTO(user) });
     res.cookie('Authorization', token, {
       httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
-      sameSite: 'strict',
-      expires: new Date(Date.now() + 1 * 3600000)
+      secure: true,           // force false for local testing
+      sameSite: 'none',         // less strict
+      expires: new Date(Date.now() + 3600000)
     }).json({
         success: true,
-        message: 'Login Successful'
+        message: 'Login Successful',
+        user:userDTO(user)
       })
   } catch (error) {
     res.status(401).json({ error: error.message });
@@ -198,4 +215,4 @@ const verifyCode = async (req, res) => {
   }
 }
 
-module.exports = {registerUser, getUser, deleteUser, getAllUsers, signOut, sendVerificationCode, verifyCode}
+module.exports = {registerUser, getUser, deleteUser, getAllUsers, signOut, sendVerificationCode, verifyCode, getLoggedInUser}

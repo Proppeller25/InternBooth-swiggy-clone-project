@@ -11,7 +11,10 @@ const app= express()
 app.use(helmet())
 app.use(express.json())
 // app.use(mongoSanitize())
-app.use(cors({origin:'http://localhost:3001'}))
+app.use(cors({
+  origin:'http://localhost:3000', 
+  credentials: true
+}))
 app.use(cookieParser())
 
 

@@ -49,7 +49,7 @@ export default function CheckOutPage () {
           </div>
         </div>
 
-        <div id='checkoutContainer' className='bg-[#FFFFFF] rounded-3xl border border-gray-200 mx-auto text-left w-full lg:min-w-[min-content] lg:max-h-[fit-content] flex flex-col gap-4 sm:gap-5 flex-1'>
+        <div id='checkoutContainer' className='bg-[#FFFFFF] rounded-3xl border border-gray-200 mx-auto text-left w-full lg:min-w-[min-content] max-h-[fit-content] flex flex-col gap-4 sm:gap-5 flex-1'>
           <header className='text-lg sm:text-xl md:text-2xl font-semibold pt-4 sm:pt-6 px-4 sm:px-6 md:px-8 text-gray-800'>
             Checkout
           </header>

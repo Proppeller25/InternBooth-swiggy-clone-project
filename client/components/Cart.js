@@ -1,7 +1,7 @@
 let Cart = JSON.parse(localStorage.getItem('Cart')) || []
 
-function SaveItem (item, name) {
-  localStorage.setItem(`${name}`, JSON.stringify(item))
+function SaveItem (item, name = String) {
+  localStorage.setItem(name, JSON.stringify(item))
 }
 
 const calculateTotal = () => {
@@ -37,7 +37,7 @@ const calculateTotal = () => {
         grandTotalDiv.textContent = `₦${(Math.round((Number(calculateTotal()) * 5/100) + calculateTotal())).toLocaleString()}`
         subTotalDiv.textContent = `₦ ${calculateTotal().toLocaleString()}`
         deliveryFeesDiv.textContent = `₦ ${(Number(calculateTotal()) * 5/100).toLocaleString()}`
-        console.log(founditem)
+        SaveItem(Cart, 'Cart')
       }
     }
 
@@ -58,9 +58,9 @@ const calculateTotal = () => {
           grandTotalDiv.textContent = `₦${(Math.round((Number(calculateTotal()) * 5/100) + calculateTotal())).toLocaleString()}`
           subTotalDiv.textContent = `₦ ${calculateTotal().toLocaleString()}`
           deliveryFeesDiv.textContent = `₦ ${(Number(calculateTotal()) * 5/100).toLocaleString()}`
-          containerDiv
-          console.log(founditem, Cart)
+          
           containerDiv.remove()
+          SaveItem(Cart, 'Cart')
         }
       }
     }

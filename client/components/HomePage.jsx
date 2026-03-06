@@ -18,6 +18,11 @@ function HomePage() {
   const navigate = useNavigate()
   const { user, isLoggedIn, login } = useAuth()
 
+  const handleUserPanel = () => {
+    const userPanel = document.querySelector('#UserSidePanel')
+    userPanel.classList.toggle('hidden')
+  }
+
   const handleSignUp = async (e) => {
     e.preventDefault();
     try {
@@ -78,13 +83,15 @@ const handleLogIn = async (e) => {
 
   useEffect(() => {
     fetchMenu().then((menu) => {
-      setMenuArr(menu)
+      if (menu) setMenuArr(menu)
+      else setMenuArr([])
     })
   }, [])
 
   useEffect(() => {
     fetchRestaurants().then((restaurants) => {
-      setRestaurantsArr(restaurants)
+      if (restaurants) setRestaurantsArr(restaurants)
+      else setRestaurantsArr([])
     })
   }, [])
 
@@ -109,8 +116,8 @@ const handleLogIn = async (e) => {
 
   return (
     <>
-        <header className="bg-[#FE9803] flex flex-row items-center justify-between lg:gap-16 md:gap-8 gap-4 lg:p-8 md:p-6 p-4 z-10 relative" style={{fontFamily: 'Gilroy, Roboto, Helvetica Neue, sans-serif'}}>
-        <div><Link to="/"><img src="/images/NaiDeliver.png" className='lg:max-w-[250px] md:max-w-36 max-w-52 relative z-10' /></Link></div>
+        <header className="bg-[#FE9803] flex flex-row items-center justify-between lg:gap-16 md:gap-8 gap-4 lg:p-8 md:p-6 p-4 z-10 relative min-w-0" style={{fontFamily: 'Gilroy, Roboto, Helvetica Neue, sans-serif'}}>
+        <div><Link to="/"><img src="/images/NaiDeliver.png" className='lg:max-w-[250px] md:max-w-36 max-w-52 min-w-0 relative z-10' /></Link></div>
 
         {/* <div></div> <div></div> <div></div> */}
         
@@ -118,7 +125,7 @@ const handleLogIn = async (e) => {
         <nav id='signInNav text-center'>
           {
             isLoggedIn && (
-              <i className="fa-solid fa-circle-user text-center lg:text-3xl md:text-2xl text-xl hover:scale-150 transition-all hover:cursor-pointer" title= {`logged in as ${user.username}`} ></i>
+              <i className="fa-solid fa-circle-user text-center lg:text-3xl md:text-2xl text-xl hover:scale-150 transition-all hover:cursor-pointer" title= {`logged in as ${user.username}`} onClick={handleUserPanel}></i>
             )
           }
 
@@ -425,6 +432,42 @@ const handleLogIn = async (e) => {
               
         </aside>
         )}
+
+        <aside id="UserSidePanel" className="hidden fixed inset-0 bg-black/50 z-40">
+          <div className="bg-white fixed top-0 right-0 bottom-0 z-20 w-[280px] md:w-[40%] lg:w-[32%]">
+            <div className = ' py-12 px-9 relative'>
+              <button id="closeBtn" className="lg:text-xl absolute top-5 font-thin" onClick = {() => setIsSignUpOpen(false)}>
+            <i className="fa-solid fa-xmark" onClick={handleUserPanel}></i>
+            </button>
+
+            <header className='flex flex-row justify-between items-center'>
+              <div className=''>
+                <h1 className='lg:text-3xl md:text-2xl mt-2 lg:mt-5 font-medium'>Account details</h1>
+              </div>
+              <div id='imgDiv ' className='flex flex-row items-center justify-center'>
+                <i className="fa-solid fa-circle-user text-center lg:text-3xl md:text-2xl text-xl hover:scale-150 transition-all hover:cursor-pointer" title={`loggedIn as ${user? user.username: ''}`}></i>
+              </div>
+              
+            </header>
+
+            <hr/>
+
+            <div id='formDiv' className='flex flex-col justify-between items-left mt-5 gap-5'>
+              <div className='lg:text-lg md:text-xs text-sm'>
+                UserName: {user? user.username : ''}
+              </div>
+              <div className='lg:text-lg md:text-xs text-sm'>
+                Email: {user? user.email : ''}
+              </div>
+              <div className='flex flex-row items-center justify-center'>
+                <button className='bg-red-500 py-1 px-2 text-white rounded-lg'>Logout</button>
+              </div>
+            </div>
+            </div>
+
+          </div>
+              
+        </aside>
         
     </>
   )

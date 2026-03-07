@@ -4,7 +4,9 @@ import { useParams } from 'react-router-dom';
 import '../public/output.css'
 import axios from 'axios'
 import {Link} from 'react-router-dom'
-import { Cart, SaveItem } from './Cart';
+// import { Cart, SaveItem } from './Cart';
+import { useAuth } from '../contexts/AuthContext'
+
 
 const OrderPage = () => {
   const { foodId } = useParams();
@@ -12,24 +14,32 @@ const OrderPage = () => {
   const [restaurants, setRestaurants] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const { user } = useAuth()
+  
+
+let Cart = JSON.parse(localStorage.getItem(`${user?.id}Cart`)) || []
+
+function SaveItem (item, name = String) {
+  localStorage.setItem(name, JSON.stringify(item))
+}
+
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         // 1. Fetch food details
-        const foodRes = await axios.get(`http://localhost:5000/swiggy/findMenuById/${foodId}`);
-        if (foodRes.status !== 200) throw new Error('Food not found');
-        const foodData = foodRes.data;
+        const foodRes = await axios.get(`http://localhost:5000/swiggy/findMenuById/${foodId}`)
+        if (foodRes.status !== 200) throw new Error('Food not found')
+        const foodData = foodRes.data
         setFood(foodData)
 
         // 2. Fetch restaurants using the restaurantId array
         if (foodData.restaurantId && foodData.restaurantId.length > 0) {
           const ids = foodData.restaurantId.join(',');
-          const restRes = await axios.get(`http://localhost:5000/swiggy/restaurantsById?ids=${ids}`);
-          if (restRes.status !== 200) throw new Error('Failed to fetch restaurants');
-          const restData = restRes.data;
-          setRestaurants(restData);
-          console.log(restData);
+          const restRes = await axios.get(`http://localhost:5000/swiggy/restaurantsById?ids=${ids}`)
+          if (restRes.status !== 200) throw new Error('Failed to fetch restaurants')
+          const restData = restRes.data
+          setRestaurants(restData)
         }
       } catch (err) {
         setError(err.message);
@@ -92,7 +102,7 @@ function addToCart (restaurantId, restaurantName) {
   const cartLength = document.getElementById('cartLength')
   cartLength.textContent = `${Cart.length}`
 
-  SaveItem(Cart, 'Cart')
+  SaveItem(Cart, `${user?.id}Cart`)
 }
 
   return (

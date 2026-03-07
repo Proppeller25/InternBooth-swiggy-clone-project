@@ -123,7 +123,7 @@ Backend Setup:
    NODE_CODE_SENDING_EMAIL_PASSWORD=your_gmail_app_password
    HMAC_VARIFICATION_CODE=your_hmac_secret_for_verification_codes
 4. Start the server: npm run server (or node server.js)
-   The server runs on http://localhost:5000.
+   The server runs on http://localhost:5000. (you can use any port number)
 
 Frontend Setup:
 1. Navigate to the frontend folder.

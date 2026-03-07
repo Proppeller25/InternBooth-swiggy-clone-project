@@ -58,7 +58,19 @@ const handleLogIn = async (e) => {
     } catch (error) {
       console.error('Login failed:', error.response?.data || error.message);
     }
-  };
+  }
+
+  const handelLogOut = async (e) => {
+    e.preventDefault()
+    try {
+      const response = await axios.post('http://localhost:5000/swiggy/logout', {withCredentials: true})
+      response.data.success && console.log(response.data)
+    } catch (error) {
+      console.error('error logging out:', error)
+    }
+
+  }
+
 
   async function fetchMenu () {
     try{
@@ -117,7 +129,7 @@ const handleLogIn = async (e) => {
   return (
     <>
         <header className="bg-[#FE9803] flex flex-row items-center justify-between lg:gap-16 md:gap-8 gap-4 lg:p-8 md:p-6 p-4 z-10 relative min-w-0" style={{fontFamily: 'Gilroy, Roboto, Helvetica Neue, sans-serif'}}>
-        <div><Link to="/"><img src="/images/NaiDeliver.png" className='lg:max-w-[250px] md:max-w-36 max-w-52 min-w-0 relative z-10' /></Link></div>
+        <div><Link to="/"><img src="/images/NaiDeliver.png" className='lg:max-w-[250px] md:max-w-36 max-w-24 min-w-0 relative z-10' /></Link></div>
 
         {/* <div></div> <div></div> <div></div> */}
         
@@ -460,7 +472,7 @@ const handleLogIn = async (e) => {
                 Email: {user? user.email : ''}
               </div>
               <div className='flex flex-row items-center justify-center'>
-                <button className='bg-red-500 py-1 px-2 text-white rounded-lg'>Logout</button>
+                <button className='bg-red-500 py-1 px-2 text-white rounded-lg' onClick={handelLogOut}>Logout</button>
               </div>
             </div>
             </div>

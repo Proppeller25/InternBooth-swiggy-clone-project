@@ -11,20 +11,23 @@ import { useAuth } from '../contexts/AuthContext'
 
 export default function CheckOutPage () {
   const { user } = useAuth()
-  const changeCart = (original, updated) =>  {
-    original = updated
-    return original
-  } 
+  
+ 
   let Cart = JSON.parse(localStorage.getItem(`${user?.id}Cart`)) || []
 
-function SaveItem (item, name = String) {
-  localStorage.setItem(name, JSON.stringify(item))
-}
+  
 
-const calculateTotal = () => {
+  
+
+  function SaveItem (item, name = String) {
+  localStorage.setItem(name, JSON.stringify(item))  
+  }
+
+  const calculateTotal = () => {
     let total = 0
     Cart.forEach((item) => {
       total = total + ((item.price * item.items) * 1350)
+      
     })
     return total
   }
@@ -78,14 +81,31 @@ const calculateTotal = () => {
           
           containerDiv.remove()
           SaveItem(updatedCart, `${user?.id}Cart`)
+          location.reload()
         }
       }
     }
     
   }
 
+  if (Cart.length <= 0) return (
+    <>
+      <div className='text-center flex flex-col items-center justify- gap-5 m-auto  min-w-screen min-h-screen'>
+        <img src="../images/emptyCart.png" alt="Empty Cart" className='max-w-[50%] py-10'/>
+        <div className='md:text-3xl text-base sm:text-2xl lg:text-4xl text-[#eb3a20]'>
+          Hi, {user?.username} <br /> <br />
+          Your Cart is Empty
+        </div>
+        <div>
+          Go back to Home
+        </div>
+      </div>
+    </>
+  )
+
   return (
     <>
+      
       <div id='containerDiv' className='flex flex-col lg:flex-row gap-4 sm:gap-6 md:gap-8 bg-[#E8E8E8] p-4 sm:p-6 md:p-10 w-full min-h-screen'>
         <div id='cartContent' className='bg-[#FFFFFF] rounded-3xl border border-gray-200 mx-auto text-left p-4 sm:p-6 md:p-8 w-full'>
           <header className='text-lg sm:text-xl md:text-2xl font-semibold py-2 text-gray-800'>
@@ -109,7 +129,7 @@ const calculateTotal = () => {
                     </div>
 
                     <div className='border-2 border-gray-300 flex flex-row justify-between items-center gap-3 px-3 py-2 rounded-lg text-gray-700 text-sm'>
-                      <button id='reduceButton' className='text-lg sm:text-xl hover:text-[#EB3A20] transition-colors font-bold' onClick={() => alterQuantity('reduce', item.id)}>−</button>
+                      <button id='reduceButton' className='text-lg sm:text-xl hover:text-[#eb3a20] transition-colors font-bold' onClick={() => alterQuantity('reduce', item.id)}>−</button>
                       <div id={`quantityDiv-${item.id}`} className='font-semibold'>{item.items}</div>
                       <button id='addButton' className='text-lg sm:text-xl hover:text-[#27AE60] transition-colors font-bold'  onClick={() => alterQuantity('add', item.id)}>+</button>
                     </div>

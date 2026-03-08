@@ -60,13 +60,18 @@ const handleLogIn = async (e) => {
     }
   }
 
-  const handelLogOut = async (e) => {
+  const handleLogOut = async (e) => {
     e.preventDefault()
     try {
       const response = await axios.post('http://localhost:5000/swiggy/logout', {withCredentials: true})
-      response.data.success && console.log(response.data)
+      if(response.data.success){
+        console.log(response.data)
+        handleUserPanel()
+        location.reload()
+      }
     } catch (error) {
       console.error('error logging out:', error)
+      
     }
 
   }
@@ -129,7 +134,7 @@ const handleLogIn = async (e) => {
   return (
     <>
         <header className="bg-[#FE9803] flex flex-row items-center justify-between lg:gap-16 md:gap-8 gap-4 lg:p-8 md:p-6 p-4 z-10 relative min-w-0" style={{fontFamily: 'Gilroy, Roboto, Helvetica Neue, sans-serif'}}>
-        <div><Link to="/"><img src="/images/NaiDeliver.png" className='lg:max-w-[250px] md:max-w-36 max-w-24 min-w-0 relative z-10' /></Link></div>
+        <div><Link to="/"><img src="/images/NaiDeliver.png" className='lg:max-w-[250px] md:max-w-[200px] max-w-[150px] min-w-0 relative z-10' /></Link></div>
 
         {/* <div></div> <div></div> <div></div> */}
         
@@ -446,34 +451,41 @@ const handleLogIn = async (e) => {
         )}
 
         <aside id="UserSidePanel" className="hidden fixed inset-0 bg-black/50 z-40">
-          <div className="bg-white fixed top-0 right-0 bottom-0 z-20 w-[280px] md:w-[40%] lg:w-[32%]">
-            <div className = ' py-12 px-9 relative'>
-              <button id="closeBtn" className="lg:text-xl absolute top-5 font-thin" onClick = {() => setIsSignUpOpen(false)}>
+          <div className="bg-white fixed top-0 right-0 bottom-0 z-20 min-w-[min-content] md:min-w-[40%] lg:min-w-[32%]">
+            <div className = ' py-12 px-9 relative flex flex-col justify-between items-start gap-5'>
+              <button id="closeBtn" className="lg:text-xl absolute top-5 font-thin " onClick = {() => setIsSignUpOpen(false)}>
             <i className="fa-solid fa-xmark" onClick={handleUserPanel}></i>
             </button>
 
-            <header className='flex flex-row justify-between items-center'>
-              <div className=''>
-                <h1 className='lg:text-3xl md:text-2xl mt-2 lg:mt-5 font-medium'>Account details</h1>
-              </div>
-              <div id='imgDiv ' className='flex flex-row items-center justify-center'>
-                <i className="fa-solid fa-circle-user text-center lg:text-3xl md:text-2xl text-xl hover:scale-150 transition-all hover:cursor-pointer" title={`loggedIn as ${user? user.username: ''}`}></i>
-              </div>
+            <div className='w-full bg-[#FE9803] flex flex-col justify-between items-center px-5 py-2 rounded-t-lg mt-5 text-white gap-5'>
+              <div className='flex flex-row gap-2 justify-between items-center'>
+                <i className="fa-solid fa-circle-user text-center lg:text-3xl md:text-2xl text-xl hover:cursor-pointer" title= {`logged in as ${user?.username}`} onClick={handleUserPanel}></i> 
+                {user?.email}
+              </div> 
+              <h1>Welcome back, {`${user?.username}`.toUpperCase()} </h1>
               
-            </header>
+              
+            </div>
 
-            <hr/>
+            <div className='px-5 py-2 hover:border-l-4 hover:rounded-lg hover:cursor-pointer w-full hover:scale-105 flex flex-row justify-between  items-center'>
+              <div>
+                <i className='fa-regular fa-user mr-2'></i> Profile    
+              </div>
+              <i className='fa-solid fa-angle-right'></i>
+            </div>
 
-            <div id='formDiv' className='flex flex-col justify-between items-left mt-5 gap-5'>
-              <div className='lg:text-lg md:text-xs text-sm'>
-                UserName: {user? user.username : ''}
+            <div className='px-5 py-2 hover:border-l-4 hover:rounded-l-lg hover:cursor-pointer w-full hover:scale-105 flex flex-row justify-between items-center'>
+              <div>
+                <i className='fa-solid fa-user-gear mr-2'></i>Settings
               </div>
-              <div className='lg:text-lg md:text-xs text-sm'>
-                Email: {user? user.email : ''}
+              <i className='fa-solid fa-angle-right'></i>
+            </div>
+            
+            <div className='px-5 py-2 hover:border-l-4 hover:rounded-l-lg hover:cursor-pointer w-full text-red-500 flex flex-row justify-between items-center' onClick={handleLogOut}>
+              <div>
+                <i className="fa-solid fa-arrow-right-from-bracket mr-2" ></i>Logout
               </div>
-              <div className='flex flex-row items-center justify-center'>
-                <button className='bg-red-500 py-1 px-2 text-white rounded-lg' onClick={handelLogOut}>Logout</button>
-              </div>
+              <i className='fa-solid fa-angle-right'></i>
             </div>
             </div>
 

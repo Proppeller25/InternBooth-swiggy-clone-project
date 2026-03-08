@@ -90,23 +90,27 @@ export default function CheckOutPage () {
 
   if (Cart.length <= 0) return (
     <>
+    <div id='container' className='m-auto max-w-[max-content] overflow-x-hidden no-scrollbar max-h-[max-content] '>
+      <div className='flex justify-center items-center py-5'>
+      <h1 className='text-lg  sm:text-xl md:text-2xl lg:text-3xl text-orange-600'>Hi, {`${user?.username? user.username : ''}`.toUpperCase()}</h1></div>
       <div className='text-center flex flex-col items-center justify- gap-5 m-auto  min-w-screen min-h-screen'>
-        <img src="../images/emptyCart.png" alt="Empty Cart" className='max-w-[50%] py-10'/>
-        <div className='md:text-3xl text-base sm:text-2xl lg:text-4xl text-[#eb3a20]'>
-          Hi, {user?.username} <br /> <br />
+        <img src="../images/emptyCart.png" alt="Empty Cart" className='max-w-[50%] py-10 '/>
+        <div className='md:text-3xl text-base sm:text-2xl lg:text-4xl text-[#eb3a20] font-mono'>
           Your Cart is Empty
         </div>
-        <div>
-          Go back to Home
+        <div className=' text-green-500'>
+          <Link to={"/"}>Go back to Home</Link>
         </div>
       </div>
+    </div>
+    
     </>
   )
 
   return (
     <>
       
-      <div id='containerDiv' className='flex flex-col lg:flex-row gap-4 sm:gap-6 md:gap-8 bg-[#E8E8E8] p-4 sm:p-6 md:p-10 w-full min-h-screen'>
+      <div id='containerDiv' className='flex flex-col lg:flex-row gap-4 sm:gap-6 md:gap-8 bg-[#f1f0ed] p-4 sm:p-6 md:p-10 w-full min-h-screen'>
         <div id='cartContent' className='bg-[#FFFFFF] rounded-3xl border border-gray-200 mx-auto text-left p-4 sm:p-6 md:p-8 w-full'>
           <header className='text-lg sm:text-xl md:text-2xl font-semibold py-2 text-gray-800'>
             Your Cart
@@ -169,7 +173,6 @@ export default function CheckOutPage () {
         </div>
 
       </div>
-      {console.log(Cart)}
     </>
   )
 }

@@ -89,7 +89,6 @@ project-root/
 │   │   ├── images/           # Static images (restaurants, menu items)
 │   │   └── output.css        # Tailwind output
 │   ├── src/
-│   │   ├── components/       # Reusable components (Cart.js – plain JS)
 │   │   ├── contexts/         # React context
 │   │   │   └── AuthContext.jsx
 │   │   ├── pages/            # Page components
@@ -165,9 +164,9 @@ Routing (React Router):
 
 State Management:
 - Authentication: AuthContext provides user, isLoggedIn, loading, and login methods. It checks the logged‑in user on initial load via /loggedInUser.
-- Cart: A plain JavaScript module (Cart.js) manages cart state using localStorage. Functions like calculateTotal and alterQuantity are used in components.
+- Cart: A plain JavaScript module (Cart.js) manages cart state using localStorage. Functions like calculateTotal and alterQuantity are used in pages.
 
-Key Components:
+Key Pages:
 - HomePage: Displays a hero section, food categories, and a list of restaurants. Includes login/signup modals.
 - OrderPage: Shows details of a selected food item and lists restaurants that serve it. Allows adding to cart.
 - CheckOutPage: Displays cart items, quantity controls, and price breakdown.

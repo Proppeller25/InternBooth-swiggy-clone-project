@@ -1,0 +1,30 @@
+body {
+  transition: all 1s;
+}
+
+body:has(#UserSidePanel.open) {
+  overflow: hidden;
+}
+
+/* Base: panel off‑screen, backdrop transparent */
+#UserSidePanel {
+  background-color: rgba(0,0,0,0);
+  pointer-events: none;
+  transition: background-color 0.3s;
+}
+
+#UserSidePanel .bg-white {
+  transform: translateX(100%);
+  transition: transform 0.3s;
+}
+
+/* Open state */
+#UserSidePanel.open {
+  pointer-events: auto;           /* catch clicks when open */
+  background-color: rgba(0,0,0,0.5);
+}
+
+#UserSidePanel.open .bg-white {
+  transform: translateX(0%);
+}
+

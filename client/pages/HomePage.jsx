@@ -8,9 +8,11 @@ import { useAuth } from '../contexts/AuthContext'
 
 
 function HomePage() {
+
   const [menuArr, setMenuArr] = useState([])
   const [isLogInOpen, setIsLogInOpen] = useState(false)
   const [isSignUpOpen, setIsSignUpOpen] = useState(false)
+  const [isPanelOpen, setIsPanelOpen] = useState(false);
   const [restaurantsArr, setRestaurantsArr] = useState([])
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
@@ -18,10 +20,7 @@ function HomePage() {
   const navigate = useNavigate()
   const { user, isLoggedIn, login } = useAuth()
 
-  const handleUserPanel = () => {
-    const userPanel = document.querySelector('#UserSidePanel')
-    userPanel.classList.toggle('hidden')
-  }
+  const handleUserPanel = () => setIsPanelOpen(!isPanelOpen)
 
   const handleSignUp = async (e) => {
     e.preventDefault();
@@ -134,6 +133,7 @@ const handleLogIn = async (e) => {
   return (
     <>
         <header className="bg-[#FE9803] flex flex-row items-center justify-between lg:gap-16 md:gap-8 gap-4 lg:p-8 md:p-6 p-4 z-10 relative min-w-0" style={{fontFamily: 'Gilroy, Roboto, Helvetica Neue, sans-serif'}}>
+          
         <div><Link to="/"><img src="/images/NaiDeliver.png" className='lg:max-w-[250px] md:max-w-[200px] max-w-[150px] min-w-0 relative z-10' /></Link></div>
 
         {/* <div></div> <div></div> <div></div> */}
@@ -209,15 +209,15 @@ const handleLogIn = async (e) => {
 
           <article className='text-left lg:px-[150px] md:px-[100px] px-[50px] bg-white w-full'>
             <div className='bg-white flex flex-col items-start justify-center gap-4 lg:w-full md:w-full w-full pt-10 relative z-10'>
-              <h1 className='font-bold text-2xl'>Discover our best food options</h1>
+              <h1 className='font-bold text-sm md:text-xl lg:text-2xl transition-all'>Discover our best food options</h1>
               <div className='grid grid-rows-2 grid-flow-col lg:gap-5 gap-10 w-full overflow-x-auto overflow-hidden no-scrollbar'>
                 {
                 menuArr.map((food) => {
                   
                   return (
-                    <div key={food._id} className=" text-center text-lg w-[fit-content] flex flex-col justify-center items-center" onClick={() => handleFoodClick(food)}>
-                      <img src={`./images/menu/${food.image}`} alt={food.image} className="lg:min-w-40 min-w-20" />
-                      <h2 className="text-[1rem] font-medium mb-2">{food.name}</h2>
+                    <div key={food._id} className=" text-center text-lg max-w-[max-content] flex flex-col justify-center items-center " onClick={() => handleFoodClick(food)}>
+                      <img src={`./images/menu/${food.image}`} alt={food.image} className="lg:min-w-40 max-w-15 md:min-w-24" />
+                      <h2 className="text-[1rem] font-medium mb-2"> {food.name.length > 20 ? food.name.substring(0, 10) + '...' : food.name}</h2>
                     </div>
                   )
                 })
@@ -229,14 +229,14 @@ const handleLogIn = async (e) => {
 
           <article className='text-left lg:px-[150px] md:px-[100px] px-[50px] bg-white w-full -mt-10'>
               <div className='bg-white flex flex-col items-start justify-center gap-4 lg:w-full md:w-full w-full pt-10 relative z-10'>
-              <h1 className='font-bold text-2xl'>Discover best restaurants on Dineout</h1> 
+              <h1 className='font-bold text-sm md:text-xl lg:text-2xl transition-all'>Discover best restaurants on Dineout</h1> 
               </div>
 
               <div className='grid grid-rows-1 grid-flow-col lg:gap-5 gap-10 w-full overflow-x-auto overflow-hidden no-scrollbar mt-10 p-5'>
                 {
                   restaurantsArr.map((restaurant) => {
                     return (
-                      <div key={restaurant._id} className="min-w-[max-content] rounded-[20px] overflow-hidden border shadow-xl">
+                      <div key={restaurant._id} className="min-w-[230px] lg:min-w-[max-content] md:min-w-[max-content]  rounded-[20px] overflow-hidden border shadow-xl">
                         <div
                           id='bgImg&Rating'
                           style={
@@ -250,7 +250,7 @@ const handleLogIn = async (e) => {
                           }
                           className="w-full h-32 md:h-40 lg:h-48 text-white flex flex-row items-end justify-between lg:px-5 md:px-3 px-2 py-2 rounded-t-[20px]"
                         >
-                          <h2 className="text-[1.5rem] font-medium">{restaurant.name}</h2>
+                          <h2 className="text-[1.5rem] font-medium">{restaurant.name.length > 10? restaurant.name.substring(0, 10) + '...'  : restaurant.name}</h2>
 
                           <div className="flex flex-row items-center justify-center gap-1">
                             <div className=' px-1 rounded-full'>
@@ -450,14 +450,14 @@ const handleLogIn = async (e) => {
         </aside>
         )}
 
-        <aside id="UserSidePanel" className="hidden fixed inset-0 bg-black/50 z-40">
+        <aside id="UserSidePanel" className={`fixed inset-0 bg-black/50 z-40 ${isPanelOpen ? 'open' : ''}`}>
           <div className="bg-white fixed top-0 right-0 bottom-0 z-20 min-w-[min-content] md:min-w-[40%] lg:min-w-[32%]">
             <div className = ' py-12 px-9 relative flex flex-col justify-between items-start gap-5'>
               <button id="closeBtn" className="lg:text-xl absolute top-5 font-thin " onClick = {() => setIsSignUpOpen(false)}>
             <i className="fa-solid fa-xmark" onClick={handleUserPanel}></i>
             </button>
 
-            <div className='w-full bg-[#FE9803] flex flex-col justify-between items-center px-5 py-2 rounded-t-lg mt-5 text-white gap-5'>
+            <div className='w-full bg-[#FE9803] flex flex-col justify-between items-start px-5 py-2 rounded-t-lg mt-5 text-white gap-5'>
               <div className='flex flex-row gap-2 justify-between items-center'>
                 <i className="fa-solid fa-circle-user text-center lg:text-3xl md:text-2xl text-xl hover:cursor-pointer" title= {`logged in as ${user?.username}`} onClick={handleUserPanel}></i> 
                 {user?.email}
@@ -467,31 +467,43 @@ const handleLogIn = async (e) => {
               
             </div>
 
-            <div className='px-5 py-2 hover:border-l-4 hover:rounded-lg hover:cursor-pointer w-full hover:scale-105 flex flex-row justify-between  items-center'>
+            <div className='px-5 py-2 hover:border-l-4 hover:rounded-lg hover:cursor-pointer w-full hover:scale-105 hover:bg-[#fddfa4] flex flex-row justify-between  items-center text-sm md:text-base lg:text-lg transition-all'>
               <div>
-                <i className='fa-regular fa-user mr-2'></i> Profile    
+                <i className='fa-regular fa-user text-[orange] mr-2'></i> Profile    
               </div>
-              <i className='fa-solid fa-angle-right'></i>
+              <i className='fa-solid fa-angle-right text-xs md:text-base lg:text-lg transition-all'></i>
             </div>
 
-            <div className='px-5 py-2 hover:border-l-4 hover:rounded-l-lg hover:cursor-pointer w-full hover:scale-105 flex flex-row justify-between items-center'>
+            <div className='px-5 py-2 hover:border-l-4 hover:rounded-l-lg hover:cursor-pointer w-full hover:scale-105 flex flex-row justify-between items-center text-sm md:text-base lg:text-lg transition-all'>
               <div>
-                <i className='fa-solid fa-user-gear mr-2'></i>Settings
+                <i className='fa-solid fa-user-gear text-green-500 mr-2'></i>Settings
               </div>
-              <i className='fa-solid fa-angle-right'></i>
+              <i className='fa-solid fa-angle-right text-xs md:text-base lg:text-lg transition-all'></i>
             </div>
-            
-            <div className='px-5 py-2 hover:border-l-4 hover:rounded-l-lg hover:cursor-pointer w-full text-red-500 flex flex-row justify-between items-center' onClick={handleLogOut}>
+
+            <div className='px-5 py-2 hover:border-l-4 hover:rounded-l-lg hover:cursor-pointer w-full  flex flex-row justify-between items-center text-sm md:text-base lg:text-lg transition-all'>
               <div>
-                <i className="fa-solid fa-arrow-right-from-bracket mr-2" ></i>Logout
+                <Link to={"/Checkout"}><i className="fa-solid fa-cart-shopping text-orange-500 mr-2" ></i>Go to Cart</Link>
               </div>
-              <i className='fa-solid fa-angle-right'></i>
+              <i className='fa-solid fa-angle-right text-xs md:text-base lg:text-lg transition-all'></i>
             </div>
+
+            <div className='px-5 py-2 hover:border-l-4 hover:rounded-l-lg hover:cursor-pointer w-full  flex flex-row justify-between items-center text-sm md:text-base lg:text-lg transition-all' onClick={handleLogOut}>
+              <div>
+                <i className="fa-solid fa-arrow-right-from-bracket text-red-600 mr-2" ></i>Logout
+              </div>
+              <i className='fa-solid fa-angle-right text-xs md:text-base lg:text-lg transition-all'></i>
+            </div>
+
             </div>
 
           </div>
               
         </aside>
+
+ 
+
+
         
     </>
   )

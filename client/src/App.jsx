@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import '../public/output.css'
+import './index.css'
 import {
 Route,
 RouterProvider,
@@ -10,9 +11,9 @@ import axios from 'axios'
 
 import { AuthProvider } from '../contexts/AuthContext';
 
-import {HomePage} from '../components/HomePage'
-import OrderPage from '../components/orderPage'
-import CheckOutPage from '../components/CheckOutPage'
+import {HomePage} from '../pages/HomePage'
+import OrderPage from '../pages/orderPage'
+import CheckOutPage from '../pages/CheckOutPage'
 
 const router =  createBrowserRouter(
   createRoutesFromElements(

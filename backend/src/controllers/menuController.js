@@ -53,7 +53,6 @@ const registerFood = async (req, res) => {
   })
   await newFood.save()
   res.status(200).json({ message: 'food registered successfully' })
-  console.log(newFood)
   }
     catch (error) {
       if (error.code === 11000) {

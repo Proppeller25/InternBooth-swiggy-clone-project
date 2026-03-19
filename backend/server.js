@@ -40,6 +40,7 @@ requiredEnv.forEach((key) => {
   if (!process.env[key]) {
     console.error(`FATAL ERROR: ${key} is not defined.`);
     process.exit(1);
+    
   }
 });
 
